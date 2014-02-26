@@ -45,17 +45,17 @@ class Macro:
 
     def left_click_to(self, x, y):
         """Left clicks the cursor to the x, y coordinates"""
-        if(x > 0 and y > 0):
+        if(x >= 0 and y >= 0):
             controller.generateMouseEvent(x, y, 'b1c')
             
     def middle_click_to(self, x, y):
         """Middle clicks the cursor to the x, y coordinates"""
-        if(x > 0 and y > 0):
+        if(x >= 0 and y >= 0):
             controller.generateMouseEvent(x, y, 'b2c')
             
     def right_click_to(self, x, y):
         """Right clicks the cursor to the x, y coordinates"""
-        if(x > 0 and y > 0):
+        if(x >= 0 and y >= 0):
             controller.generateMouseEvent(x, y, 'b3c')
 
 
@@ -132,7 +132,7 @@ class Macro:
                 cur_color = QColor(img.pixel(QPoint(cur_x, cur_y)))
                 if(str(color)==str(cur_color.name())):
                     counter+=1
-                cur_x+=PIXELS_SEARCH_SPEED
+                cur_x+=self.pixel_search_speed
             cur_y+=1
         return counter;
 
@@ -164,7 +164,7 @@ class Macro:
                 cur_color = QColor(img.pixel(QPoint(cur_x, cur_y)))
                 if(str(color)==str(cur_color.name())):
                     return True, [cur_x+x, cur_y+y]
-                cur_x+=PIXELS_SEARCH_SPEED
+                cur_x+=self.pixel_search_speed
             cur_y+=1
         return False, [-1, -1]
         
@@ -244,7 +244,7 @@ class Macro:
         point is a tuple [x, y] while color is a string (e.g. #000000)
         """
         color=to_upper(color)
-        while color_of_pixel(point[0], point[1]) == color:
+        while self.color_of_pixel(point[0], point[1]) == color:
             time.sleep(timeout/1000.0)
 
 
@@ -259,10 +259,10 @@ class Macro:
         The color is a string with a hexadecimal representation of 
         a color (e.g. #000000)
         """
-        exists, point = pixel_color_in_area(rectangle, color)
+        exists, point = self.pixel_color_in_area(rectangle, color)
         while not exists:
             time.sleep(timeout/1000.0)
-            exists, point = pixel_color_in_area(rectangle, color)
+            exists, point = self.pixel_color_in_area(rectangle, color)
         return point
 
 
@@ -278,10 +278,10 @@ class Macro:
         The color is a string with a hexadecimal representation of 
         a color (e.g. #000000)
         """
-        exists, point = pixel_color_in_area(rectangle, color)
+        exists, point = self.pixel_color_in_area(rectangle, color)
         while exists:
             time.sleep(timeout/1000.0)
-            exists, point = pixel_color_in_area(rectangle, color)
+            exists, point = self.pixel_color_in_area(rectangle, color)
         return point
 
 
@@ -298,7 +298,7 @@ class Macro:
         color=to_upper(color)
         times_counter=0
         
-        while color_of_pixel(point[0], point[1]) != color:
+        while self.color_of_pixel(point[0], point[1]) != color:
             times_counter+=1
             if(times==times_counter):
                 times_counter=0
@@ -319,7 +319,7 @@ class Macro:
         color=to_upper(color)
         times_counter=0
         
-        while color_of_pixel(point[0], point[1]) == color:
+        while self.color_of_pixel(point[0], point[1]) == color:
             times_counter+=1
             if(times==times_counter):
                 times_counter=0
@@ -346,14 +346,14 @@ class Macro:
         
         times_counter=0
         
-        exists, point = pixel_color_in_area(rectangle, color)
+        exists, point = self.pixel_color_in_area(rectangle, color)
         while not exists:
             times_counter+=1
             if(times_counter==times):
                 times_counter=0
                 function()
             time.sleep(timeout/1000.0)
-            exists, point = pixel_color_in_area(rectangle, color)
+            exists, point = self.pixel_color_in_area(rectangle, color)
             
         return point
 
@@ -377,14 +377,14 @@ class Macro:
         
         times_counter=0
         
-        exists, point = pixel_color_in_area(rectangle, color)
+        exists, point = self.pixel_color_in_area(rectangle, color)
         while exists:
             times_counter+=1
             if(times_counter==times):
                 times_counter=0
                 function()
             time.sleep(timeout/1000.0)
-            exists, point = pixel_color_in_area(rectangle, color)
+            exists, point = self.pixel_color_in_area(rectangle, color)
             
         return point
 
