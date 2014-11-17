@@ -14,3 +14,19 @@ import macropolo
 macro = macropolo.Macro()
 macro.move_cursor_to(1, 1)
 ~~~
+
+All the functions inside the module include detailed description of their functionality.
+
+You can access this description either by opening the module file on a text editor and looking at the first
+few lines of each function, or through python:
+
+~~~ python
+import macropolo
+macro = macropolo.Macro()
+macro.middle_click_to.__doc__
+~~~
+
+The above outputes:
+~~~
+'Middle clicks the cursor to the x, y coordinates'
+~~~
