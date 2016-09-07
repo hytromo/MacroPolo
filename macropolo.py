@@ -10,7 +10,22 @@ from PyQt4.QtCore import QPoint, QRect
 import sys, time
 
 key_list = {
-"1":10, "2":11, "3":12, "4":13, "5":14, "6":15, "7":16, "8":17, "9":18, "0":19, "-":20, "=":21, "`":49, ".":60, "Esc":9, "Shift":50, "Win":133, "Up":111, "Down":116, "Left":113, "Right":114, "Ctrl":37, "Alt":64, "space":65, " ":65, "Return":36, "A":38, "B":56, "C":54, "D":40, "E":26, "F":41, "G":42, "H":43, "I":31, "J":44, "K":45, "L":46, "M":58, "N":57, "O":32, "P":33, "Q":24, "R":27, "S":39, "T":28, "U":30, "V":55, "W":25, "X":53, "Y":29, "Z":52, "a":38, "b":56, "c":54, "d":40, "e":26, "f":41, "g":42, "h":43, "i":31, "j":44, "k":45, "l":46, "m":58, "n":57, "o":32, "p":33, "q":24, "r":27, "s":39, "t":28, "u":30, "v":55, "w":25, "x":53, "y":29, "z":52, "F1":67, "F2":68, "F3":69, "F4":70, "F5":71, "F6":72, "F7":73, "F8":74, "F9":75, "F10":76, "F11":95, "F22":96, 
+        "1":10, "2":11, "3":12, "4":13, "5":14, "6":15, "7":16, "8":17, "9":18, "0":19, "-":20, "=":21, "`":49, ".":60, "Esc":9, "Shift":50, "Win":133, "Up":111, "Down":116, "Left":113, "Right":114, "Ctrl":37, "Alt":64, "space":65, " ":65, "Return":36, "A":38, "B":56, "C":54, "D":40, "E":26, "F":41, "G":42, "H":43, "I":31, "J":44, "K":45, "L":46, "M":58, "N":57, "O":32, "P":33, "Q":24, "R":27, "S":39, "T":28, "U":30, "V":55, "W":25, "X":53, "Y":29, "Z":52, "a":38, "b":56, "c":54, "d":40, "e":26, "f":41, "g":42, "h":43, "i":31, "j":44, "k":45, "l":46, "m":58, "n":57, "o":32, "p":33, "q":24, "r":27, "s":39, "t":28, "u":30, "v":55, "w":25, "x":53, "y":29, "z":52, "F1":67, "F2":68, "F3":69, "F4":70, "F5":71, "F6":72, "F7":73, "F8":74, "F9":75, "F10":76, "F11":95, "F12":96, "BackSpace":22
+}
+
+shift_key_list = {
+    "!": key_list["1"],
+    "@": key_list["2"],
+    "#": key_list["3"],
+    "$": key_list["4"],
+    "%": key_list["5"],
+    "^": key_list["6"],
+    "&": key_list["7"],
+    "*": key_list["8"],
+    "(": key_list["9"],
+    ")": key_list["0"],
+    "_": key_list["-"],
+    "+": key_list["="]
 }
 
 app = QApplication(sys.argv)
@@ -65,6 +80,24 @@ class Macro:
         """Right clicks the cursor to the x, y coordinates"""
         if(x >= 0 and y >= 0):
             controller.generateMouseEvent(x, y, 'b3c')
+    
+    @staticmethod
+    def __generate(i):
+        inShiftKeyList = i in shift_key_list
+        if not (i in key_list or inShiftKeyList):
+            print 'Cannot type the character \'' + i +'\''
+
+        needShift = inShiftKeyList or i.isupper()
+
+        if needShift:
+            controller.generateKeyboardEvent(key_list['Shift'], None, KEY_PRESS)
+
+        controller.generateKeyboardEvent((shift_key_list if inShiftKeyList else key_list)[i], None, KEY_PRESS)
+        time.sleep(0.01)
+        controller.generateKeyboardEvent((shift_key_list if inShiftKeyList else key_list)[i], None, KEY_RELEASE)
+
+        if needShift:
+            controller.generateKeyboardEvent(key_list['Shift'], None, KEY_RELEASE)
 
     @staticmethod
     def keyboard(key):
@@ -75,19 +108,22 @@ class Macro:
         AB12,
         A simple string rather than a tuple may as well be passed to this function.
         """
-        for i in key:
-            if i in key_list:
-                controller.generateKeyboardEvent(key_list[i], None, KEY_PRESS)
-                time.sleep(0.01)
-                controller.generateKeyboardEvent(key_list[i], None, KEY_RELEASE)
-            else:
-                for j in i:
-                    if j in key_list:
-                        controller.generateKeyboardEvent(key_list[i], None, KEY_PRESS)
+        if type(key) is str:
+            for i in key:
+               Macro. __generate(i)
+        elif type(key) in [tuple, list]:
+            for inner_str in key:
+                if inner_str.startswith('@@'):
+                    inner_str = inner_str[2:]
+                    if inner_str in key_list:
+                        controller.generateKeyboardEvent(key_list[inner_str], None, KEY_PRESS)
                         time.sleep(0.01)
-                        controller.generateKeyboardEvent(key_list[i], None, KEY_RELEASE)
+                        controller.generateKeyboardEvent(key_list[inner_str], None, KEY_RELEASE)
                     else:
-                        print "Unkown character to be sent as event:", j
+                        print 'Annotated key \'' + inner_str + '\' does not exist in my key list'
+                else:
+                    for i in inner_str:
+                       Macro. __generate(i)
 
     @staticmethod
     def key_down(key):

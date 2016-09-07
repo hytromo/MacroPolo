@@ -10,9 +10,27 @@ very easy.
 # Example usage
 
 ~~~ python
-from macropolo import Macro
+#!/usr/bin/env python2
 
+from macropolo import Macro
+from time import sleep
+
+# just move the cursor to top left
 Macro.move_cursor_to(1, 1)
+
+# write a sentence
+sentence = 'You look awesome!'
+Macro.keyboard(sentence)
+sleep(2)
+
+# delete the sentence
+for _ in range(len(sentence)):
+    Macro.keyboard(['@@BackSpace'])
+
+sleep(0.1)
+
+# run a command
+Macro.keyboard(['ls -al', '@@Return'])
 ~~~
 
 Most methods are `static`. The only methods that require an instance of `Macro()` are the ones that have to do with pixel searching because they use a specified search speed (like `pixel_color_in_area_counter()` etc)
