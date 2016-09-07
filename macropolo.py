@@ -9,11 +9,11 @@ from PyQt4.QtGui import QPixmap, QApplication, QColor, QImage, QDesktopWidget, Q
 from PyQt4.QtCore import QPoint, QRect
 import sys, time
 
+key_list = {
+"1":10, "2":11, "3":12, "4":13, "5":14, "6":15, "7":16, "8":17, "9":18, "0":19, "-":20, "=":21, "`":49, ".":60, "Esc":9, "Shift":50, "Win":133, "Up":111, "Down":116, "Left":113, "Right":114, "Ctrl":37, "Alt":64, "space":65, " ":65, "Return":36, "A":38, "B":56, "C":54, "D":40, "E":26, "F":41, "G":42, "H":43, "I":31, "J":44, "K":45, "L":46, "M":58, "N":57, "O":32, "P":33, "Q":24, "R":27, "S":39, "T":28, "U":30, "V":55, "W":25, "X":53, "Y":29, "Z":52, "a":38, "b":56, "c":54, "d":40, "e":26, "f":41, "g":42, "h":43, "i":31, "j":44, "k":45, "l":46, "m":58, "n":57, "o":32, "p":33, "q":24, "r":27, "s":39, "t":28, "u":30, "v":55, "w":25, "x":53, "y":29, "z":52, "F1":67, "F2":68, "F3":69, "F4":70, "F5":71, "F6":72, "F7":73, "F8":74, "F9":75, "F10":76, "F11":95, "F22":96, 
+}
 
-key_list = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "`", ".", "Esc", "Shift", "Win", "Up", "Down", "Left", "Right", "Ctrl", "Alt", "space", " ", "Return", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F22")
-key_codes = (10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 49, 60, 9, 50, 133, 111, 116, 113, 114, 37, 64, 65, 65, 36, 38, 56, 54, 40, 26, 41, 42, 43, 31, 44, 45, 46, 58, 57, 32, 33, 24, 27, 39, 28, 30, 55, 25, 53, 29, 52, 38, 56, 54, 40, 26, 41, 42, 43, 31, 44, 45, 46, 58, 57, 32, 33, 24, 27, 39, 28, 30, 55, 25, 53, 29, 52, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 95, 96)
-app=QApplication(sys.argv)
-
+app = QApplication(sys.argv)
 
 def to_upper(string):
     """Returns python or Qt String to upper"""
@@ -77,15 +77,15 @@ class Macro:
         """
         for i in key:
             if i in key_list:
-                controller.generateKeyboardEvent(key_codes[key_list.index(i)], None, KEY_PRESS)
+                controller.generateKeyboardEvent(key_list[i], None, KEY_PRESS)
                 time.sleep(0.01)
-                controller.generateKeyboardEvent(key_codes[key_list.index(i)], None, KEY_RELEASE)
+                controller.generateKeyboardEvent(key_list[i], None, KEY_RELEASE)
             else:
                 for j in i:
                     if j in key_list:
-                        controller.generateKeyboardEvent(key_codes[key_list.index(j)], None, KEY_PRESS)
+                        controller.generateKeyboardEvent(key_list[i], None, KEY_PRESS)
                         time.sleep(0.01)
-                        controller.generateKeyboardEvent(key_codes[key_list.index(j)], None, KEY_RELEASE)
+                        controller.generateKeyboardEvent(key_list[i], None, KEY_RELEASE)
                     else:
                         print "Unkown character to be sent as event:", j
 
@@ -103,7 +103,7 @@ class Macro:
         key_up("F4")
         """
         if key in key_list:
-            controller.generateKeyboardEvent(key_codes[key_list.index(key)], None, KEY_PRESS)
+            controller.generateKeyboardEvent(key_list[key], None, KEY_PRESS)
 
     @staticmethod
     def key_up(key):
@@ -111,7 +111,7 @@ class Macro:
         It releases a pressed key. See the key_down(key) function for more info.
         """
         if key in key_list:
-            controller.generateKeyboardEvent(key_codes[key_list.index(key)], None, KEY_RELEASE)
+            controller.generateKeyboardEvent(key_list[key], None, KEY_RELEASE)
 
     def pixel_color_in_area_counter(self, rectangle, color):
         """
