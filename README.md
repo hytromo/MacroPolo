@@ -10,10 +10,12 @@ very easy.
 # Example usage
 
 ~~~ python
-import macropolo
-macro = macropolo.Macro()
-macro.move_cursor_to(1, 1)
+from macropolo import Macro
+
+Macro.move_cursor_to(1, 1)
 ~~~
+
+Most methods are `static`. The only methods that require an instance of `Macro()` are the ones that have to do with pixel searching because they use a specified search speed (like `pixel_color_in_area_counter()` etc)
 
 # Dependencies
 
