@@ -26,7 +26,7 @@ macro = macropolo.Macro()
 macro.middle_click_to.__doc__
 ~~~
 
-The above outputes:
+The above outputs:
 ~~~
 'Middle clicks the cursor to the x, y coordinates'
 ~~~
