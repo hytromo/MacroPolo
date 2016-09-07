@@ -34,6 +34,9 @@ sleep(0.1)
 Macro.keyboard(['ls -al', '@@Return'])
 ~~~
 
+Below you can see the result (on the left) of a python script using `macropolo` (on the right)
+![MacroPolo example usage](http://i.imgur.com/aXj0Sjg.gif)
+
 Most methods are `static`. The only methods that require an instance of `Macro()` are the ones that have to do with pixel searching because they use a specified search speed (like `pixel_color_in_area_counter()` etc)
 
 # Dependencies
