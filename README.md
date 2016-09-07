@@ -7,7 +7,7 @@ This means that you can automate many tasks depending on the current color of pi
 this technic, automating complex processes (like betting at a roulette game, which is not encouraged) becomes
 very easy.
 
-Example usage to get you started:
+# Example usage
 
 ~~~ python
 import macropolo
@@ -22,6 +22,8 @@ Run the following on a debian system to install the dependencies:
 ~~~ bash
 sudo apt-get install python-qt4 python-pyatspi2
 ~~~
+
+# More info
 
 All the functions inside the module include detailed description of their functionality.
 
