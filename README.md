@@ -21,6 +21,7 @@ Macro.move_cursor_to(1, 1)
 # write a sentence
 sentence = 'You look awesome!'
 Macro.keyboard(sentence)
+
 sleep(2)
 
 # delete the sentence
