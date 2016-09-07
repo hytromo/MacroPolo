@@ -15,6 +15,14 @@ macro = macropolo.Macro()
 macro.move_cursor_to(1, 1)
 ~~~
 
+# Dependencies
+
+Run the following on a debian system to install the dependencies:
+
+~~~ bash
+sudo apt-get install python-qt4 python-pyatspi2
+~~~
+
 All the functions inside the module include detailed description of their functionality.
 
 You can access this description either by opening the module file on a text editor and looking at the first
@@ -23,7 +31,7 @@ few lines of each function, or through python:
 ~~~ python
 import macropolo
 macro = macropolo.Macro()
-macro.middle_click_to.__doc__
+print macro.middle_click_to.__doc__
 ~~~
 
 The above outputs:
