@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+import gi
+gi.require_version('Atspi', '2.0')
+
+from gi.repository import Atspi
 from pyatspi import Registry as controller
 from pyatspi import (KEY_SYM, KEY_PRESS, KEY_PRESSRELEASE, KEY_RELEASE, MOUSE_ABS)
 from PyQt4.QtGui import QPixmap, QApplication, QColor, QImage, QDesktopWidget, QCursor
@@ -34,32 +38,36 @@ class Macro:
     def setPixelSearchSpeed(self, speed):
         self.pixel_search_speed=speed;
 
-    def move_cursor_to(self, x, y):
+    @staticmethod
+    def move_cursor_to(x, y):
         """Moves the cursor to the x, y coordinates"""
         controller.generateMouseEvent(x, y, MOUSE_ABS)
     
-    def get_cursos_pos(self):
+    @staticmethod
+    def get_cursos_pos():
         """Returns the cursor pos as a tuple"""
         return [QCursor.pos().x(), QCursor.pos().y()]
 
-
-    def left_click_to(self, x, y):
+    @staticmethod
+    def left_click_to(x, y):
         """Left clicks the cursor to the x, y coordinates"""
         if(x >= 0 and y >= 0):
             controller.generateMouseEvent(x, y, 'b1c')
             
-    def middle_click_to(self, x, y):
+    @staticmethod
+    def middle_click_to(x, y):
         """Middle clicks the cursor to the x, y coordinates"""
         if(x >= 0 and y >= 0):
             controller.generateMouseEvent(x, y, 'b2c')
             
-    def right_click_to(self, x, y):
+    @staticmethod
+    def right_click_to(x, y):
         """Right clicks the cursor to the x, y coordinates"""
         if(x >= 0 and y >= 0):
             controller.generateMouseEvent(x, y, 'b3c')
 
-
-    def keyboard(self, key):
+    @staticmethod
+    def keyboard(key):
         """
         Types the tuple 'key' to the screen. For example you can say:
         ["Alex was in a bad mood lately", "Return", "A", "B", "1", "2", "comma"] and it will try to print:
@@ -81,8 +89,8 @@ class Macro:
                     else:
                         print "Unkown character to be sent as event:", j
 
-
-    def key_down(self, key):
+    @staticmethod
+    def key_down(key):
         """
         This is a more specific function than keyboard(). It can send specific
         key-pressed events, in case you want to do keyboard combinations, like Alt+F4
@@ -97,14 +105,13 @@ class Macro:
         if key in key_list:
             controller.generateKeyboardEvent(key_codes[key_list.index(key)], None, KEY_PRESS)
 
-
-    def key_up(self, key):
+    @staticmethod
+    def key_up(key):
         """
         It releases a pressed key. See the key_down(key) function for more info.
         """
         if key in key_list:
             controller.generateKeyboardEvent(key_codes[key_list.index(key)], None, KEY_RELEASE)
-
 
     def pixel_color_in_area_counter(self, rectangle, color):
         """
@@ -135,7 +142,6 @@ class Macro:
                 cur_x+=self.pixel_search_speed
             cur_y+=1
         return counter;
-
 
     def pixel_color_in_area(self, rectangle, color):
         """
@@ -168,14 +174,14 @@ class Macro:
             cur_y+=1
         return False, [-1, -1]
         
-
-
-    def color_of_pixel(self, x, y):
+    @staticmethod
+    def color_of_pixel(x, y):
         """Returns the pixel color of the pixel at coordinates x, y."""
         c = QColor(QPixmap.grabWindow(QApplication.desktop().winId()).toImage().pixel(x, y))
         return to_upper(str(c.name()))
         
-    def wait_for_pixel_color(self, point, color, timeout):
+    @staticmethod
+    def wait_for_pixel_color(point, color, timeout):
         """
         Waits till the point 'point' is of color 'color', checking
         every 'timeout' milliseconds. Then it simply exits.
@@ -183,10 +189,10 @@ class Macro:
         """
         color=to_upper(color)
         while color_of_pixel(point[0], point[1]) != color:
-            time.sleep(timeout/1000.0)
+            time.sleep(timeout / 1000.0)
 
-
-    def wait_for_pixel_colors(self, points_colors, for_all, timeout):
+    @staticmethod
+    def wait_for_pixel_colors(points_colors, for_all, timeout):
         """
         'points_colors' argument is a Ax2 array, where A is the number of pixels you want to check.
         For example, the following code:
@@ -237,7 +243,8 @@ class Macro:
                         break;
                 time.sleep(timeout/1000.0)
             
-    def wait_for_no_pixel_color(self, point, color, timeout):
+    @staticmethod
+    def wait_for_no_pixel_color(point, color, timeout):
         """
         Waits till the point 'point' is not of color 'color', checking
         every 'timeout' milliseconds. Then it simply exits.
@@ -246,7 +253,6 @@ class Macro:
         color=to_upper(color)
         while self.color_of_pixel(point[0], point[1]) == color:
             time.sleep(timeout/1000.0)
-
 
     def wait_for_pixel_color_in_area(self, rectangle, color, timeout):
         """
@@ -265,7 +271,6 @@ class Macro:
             exists, point = self.pixel_color_in_area(rectangle, color)
         return point
 
-
     def wait_for_no_pixel_color_in_area(self, rectangle, color, timeout):
         """
         Waits till the rectangle 'rectangle' does not contain
@@ -280,10 +285,9 @@ class Macro:
         """
         exists, point = self.pixel_color_in_area(rectangle, color)
         while exists:
-            time.sleep(timeout/1000.0)
+            time.sleep(timeout / 1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
         return point
-
 
     def wait_for_pixel_color_special(self, function, times, point, color, timeout):
         """
@@ -305,7 +309,6 @@ class Macro:
                 function()
             time.sleep(timeout/1000.0)
 
-
     def wait_for_no_pixel_color_special(self, function, times, point, color, timeout):
         """
         Waits till the point 'point' is not of color 'color', checking
@@ -326,7 +329,6 @@ class Macro:
                 function()
             time.sleep(timeout/1000.0)
 
-
     def wait_for_pixel_color_in_area_special(self, function, times, rectangle, color, timeout):
         """
         Waits till the rectangle 'rectangle' contains a pixel of color
@@ -344,19 +346,18 @@ class Macro:
             print "Invalid parameter passed for wait_for_pixel_color_in_area_special! 'times' should be 1 or more."
             return
         
-        times_counter=0
+        times_counter = 0
         
         exists, point = self.pixel_color_in_area(rectangle, color)
         while not exists:
             times_counter+=1
-            if(times_counter==times):
-                times_counter=0
+            if(times_counter == times):
+                times_counter = 0
                 function()
-            time.sleep(timeout/1000.0)
+            time.sleep(timeout / 1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
             
         return point
-
 
     def wait_for_no_pixel_color_in_area_special(self, function, times, rectangle, color, timeout):
         """
@@ -375,25 +376,26 @@ class Macro:
             print "Invalid parameter passed for wait_for_pixel_color_in_area_special! 'times' should be 1 or more."
             return
         
-        times_counter=0
+        times_counter = 0
         
         exists, point = self.pixel_color_in_area(rectangle, color)
         while exists:
-            times_counter+=1
-            if(times_counter==times):
-                times_counter=0
+            times_counter += 1
+            if(times_counter == times):
+                times_counter = 0
                 function()
-            time.sleep(timeout/1000.0)
+            time.sleep(timeout / 1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
             
         return point
 
-
-    def save_section_of_the_screen(self, rectangle, filename):
+    @staticmethod
+    def save_section_of_the_screen(rectangle, filename):
         """Saves the 'rectangle' in 'filename'.
         The rectangle is a tuple [x, y, width, height], where x, y the
         coordinates of the top left corner and width, height the width
         and the height of the rectangle.
         """
-        img=QPixmap.grabWindow(QApplication.desktop().winId()).toImage().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]))
+        img = QPixmap.grabWindow(QApplication.desktop().winId()).toImage().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]))
         img.save(filename, "PNG", 100);
+
