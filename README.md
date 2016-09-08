@@ -192,7 +192,7 @@ Macro
     -------
     __init__(self)
 
-    get_cursos_pos(*args, **kwargs)
+    get_cursor_pos(*args, **kwargs)
 
     pixel_color_in_area(self, rectangle, color)
         Searches the rectangle area 'rectangle' for the color 'color'.

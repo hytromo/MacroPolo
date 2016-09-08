@@ -67,7 +67,7 @@ class Macro:
     
     @classmethod
     @needQApp
-    def get_cursos_pos(cls):
+    def get_cursor_pos(cls):
         """Returns the cursor pos as a tuple"""
         return [QCursor.pos().x(), QCursor.pos().y()]
 
