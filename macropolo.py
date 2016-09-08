@@ -9,27 +9,6 @@ from PyQt4.QtGui import QPixmap, QApplication, QColor, QImage, QDesktopWidget, Q
 from PyQt4.QtCore import QPoint, QRect
 import sys, time
 
-key_list = {
-        "1":10, "2":11, "3":12, "4":13, "5":14, "6":15, "7":16, "8":17, "9":18, "0":19, "-":20, "=":21, "`":49, ".":60, "Esc":9, "Shift":50, "Win":133, "Up":111, "Down":116, "Left":113, "Right":114, "Ctrl":37, "Alt":64, "space":65, " ":65, "Return":36, "A":38, "B":56, "C":54, "D":40, "E":26, "F":41, "G":42, "H":43, "I":31, "J":44, "K":45, "L":46, "M":58, "N":57, "O":32, "P":33, "Q":24, "R":27, "S":39, "T":28, "U":30, "V":55, "W":25, "X":53, "Y":29, "Z":52, "a":38, "b":56, "c":54, "d":40, "e":26, "f":41, "g":42, "h":43, "i":31, "j":44, "k":45, "l":46, "m":58, "n":57, "o":32, "p":33, "q":24, "r":27, "s":39, "t":28, "u":30, "v":55, "w":25, "x":53, "y":29, "z":52, "F1":67, "F2":68, "F3":69, "F4":70, "F5":71, "F6":72, "F7":73, "F8":74, "F9":75, "F10":76, "F11":95, "F12":96, "BackSpace":22
-}
-
-shift_key_list = {
-    "!": key_list["1"],
-    "@": key_list["2"],
-    "#": key_list["3"],
-    "$": key_list["4"],
-    "%": key_list["5"],
-    "^": key_list["6"],
-    "&": key_list["7"],
-    "*": key_list["8"],
-    "(": key_list["9"],
-    ")": key_list["0"],
-    "_": key_list["-"],
-    "+": key_list["="]
-}
-
-app = QApplication(sys.argv)
-
 def to_upper(string):
     """Returns python or Qt String to upper"""
     try:
@@ -45,8 +24,36 @@ def to_lower(string):
     except:
         return string.lower()
 
+def needQApp(func):
+    def wrapper(*args, **kwargs):
+        MacroClass = args[0]
+        if (MacroClass.APP is None):
+            # need to create a QApplication
+            MacroClass.APP = QApplication(sys.argv)
+        return func(*args, **kwargs)
+    return wrapper
 
 class Macro:
+    APP = None # QApplication will be constructed only if needed
+    KEY_LIST = {
+            "1":10, "2":11, "3":12, "4":13, "5":14, "6":15, "7":16, "8":17, "9":18, "0":19, "-":20, "=":21, "`":49, ".":60, "Esc":9, "Shift":50, "Win":133, "Up":111, "Down":116, "Left":113, "Right":114, "Ctrl":37, "Alt":64, "space":65, " ":65, "Return":36, "A":38, "B":56, "C":54, "D":40, "E":26, "F":41, "G":42, "H":43, "I":31, "J":44, "K":45, "L":46, "M":58, "N":57, "O":32, "P":33, "Q":24, "R":27, "S":39, "T":28, "U":30, "V":55, "W":25, "X":53, "Y":29, "Z":52, "a":38, "b":56, "c":54, "d":40, "e":26, "f":41, "g":42, "h":43, "i":31, "j":44, "k":45, "l":46, "m":58, "n":57, "o":32, "p":33, "q":24, "r":27, "s":39, "t":28, "u":30, "v":55, "w":25, "x":53, "y":29, "z":52, "F1":67, "F2":68, "F3":69, "F4":70, "F5":71, "F6":72, "F7":73, "F8":74, "F9":75, "F10":76, "F11":95, "F12":96, "BackSpace":22
+    }
+
+    SHIFT_KEY_LIST = {
+        "!": KEY_LIST["1"],
+        "@": KEY_LIST["2"],
+        "#": KEY_LIST["3"],
+        "$": KEY_LIST["4"],
+        "%": KEY_LIST["5"],
+        "^": KEY_LIST["6"],
+        "&": KEY_LIST["7"],
+        "*": KEY_LIST["8"],
+        "(": KEY_LIST["9"],
+        ")": KEY_LIST["0"],
+        "_": KEY_LIST["-"],
+        "+": KEY_LIST["="]
+    }
+
     def __init__(self):
         self.pixel_search_speed=1;
 
@@ -58,10 +65,20 @@ class Macro:
         """Moves the cursor to the x, y coordinates"""
         controller.generateMouseEvent(x, y, MOUSE_ABS)
     
-    @staticmethod
-    def get_cursos_pos():
+    @classmethod
+    @needQApp
+    def get_cursos_pos(cls):
         """Returns the cursor pos as a tuple"""
         return [QCursor.pos().x(), QCursor.pos().y()]
+
+    @staticmethod
+    def mouse_event(x, y, button, eventType):
+        """Generates a mouse event, useful for mouse press or release.
+        x, y the coordinates of the event
+        button is 'left', 'right' or 'middle'
+        event type is either 'press' or 'release'"""
+        buttonToNo = {'left':1, 'right':2, 'middle':3 }
+        controller.generateMouseEvent(x, y, 'b' + str(buttonToNo[button]) + ('p' if eventType == 'press' else 'r'))
 
     @staticmethod
     def left_click_to(x, y):
@@ -83,21 +100,21 @@ class Macro:
     
     @staticmethod
     def __generate(i):
-        inShiftKeyList = i in shift_key_list
-        if not (i in key_list or inShiftKeyList):
+        inShiftKeyList = i in Macro.SHIFT_KEY_LIST
+        if not (i in Macro.KEY_LIST or inShiftKeyList):
             print 'Cannot type the character \'' + i +'\''
 
         needShift = inShiftKeyList or i.isupper()
 
         if needShift:
-            controller.generateKeyboardEvent(key_list['Shift'], None, KEY_PRESS)
+            controller.generateKeyboardEvent(Macro.KEY_LIST['Shift'], None, KEY_PRESS)
 
-        controller.generateKeyboardEvent((shift_key_list if inShiftKeyList else key_list)[i], None, KEY_PRESS)
+        controller.generateKeyboardEvent((Macro.SHIFT_KEY_LIST if inShiftKeyList else Macro.KEY_LIST)[i], None, KEY_PRESS)
         time.sleep(0.01)
-        controller.generateKeyboardEvent((shift_key_list if inShiftKeyList else key_list)[i], None, KEY_RELEASE)
+        controller.generateKeyboardEvent((Macro.SHIFT_KEY_LIST if inShiftKeyList else Macro.KEY_LIST)[i], None, KEY_RELEASE)
 
         if needShift:
-            controller.generateKeyboardEvent(key_list['Shift'], None, KEY_RELEASE)
+            controller.generateKeyboardEvent(Macro.KEY_LIST['Shift'], None, KEY_RELEASE)
 
     @staticmethod
     def keyboard(key):
@@ -115,10 +132,10 @@ class Macro:
             for inner_str in key:
                 if inner_str.startswith('@@'):
                     inner_str = inner_str[2:]
-                    if inner_str in key_list:
-                        controller.generateKeyboardEvent(key_list[inner_str], None, KEY_PRESS)
+                    if inner_str in Macro.KEY_LIST:
+                        controller.generateKeyboardEvent(Macro.KEY_LIST[inner_str], None, KEY_PRESS)
                         time.sleep(0.01)
-                        controller.generateKeyboardEvent(key_list[inner_str], None, KEY_RELEASE)
+                        controller.generateKeyboardEvent(Macro.KEY_LIST[inner_str], None, KEY_RELEASE)
                     else:
                         print 'Annotated key \'' + inner_str + '\' does not exist in my key list'
                 else:
@@ -138,16 +155,16 @@ class Macro:
         key_up("Alt")
         key_up("F4")
         """
-        if key in key_list:
-            controller.generateKeyboardEvent(key_list[key], None, KEY_PRESS)
+        if key in Macro.KEY_LIST:
+            controller.generateKeyboardEvent(Macro.KEY_LIST[key], None, KEY_PRESS)
 
     @staticmethod
     def key_up(key):
         """
         It releases a pressed key. See the key_down(key) function for more info.
         """
-        if key in key_list:
-            controller.generateKeyboardEvent(key_list[key], None, KEY_RELEASE)
+        if key in Macro.KEY_LIST:
+            controller.generateKeyboardEvent(Macro.KEY_LIST[key], None, KEY_RELEASE)
 
     def pixel_color_in_area_counter(self, rectangle, color):
         """
@@ -166,9 +183,9 @@ class Macro:
         height = rectangle[3]
         color = to_lower(color)
         
-        img = QPixmap.grabWindow(QApplication.desktop().winId()).toImage().copy(x, y, width+1, height+1);
+        img = Macro.__grabDesktop().copy(x, y, width+1, height+1);
         
-        counter=cur_y=cur_x=0
+        counter = cur_y=cur_x=0
         while( cur_y <= height ):
             cur_x=0
             while ( cur_x <= width ):
@@ -178,6 +195,11 @@ class Macro:
                 cur_x+=self.pixel_search_speed
             cur_y+=1
         return counter;
+    
+    @classmethod
+    @needQApp
+    def __grabDesktop(cls):
+        return QPixmap.grabWindow(QApplication.desktop().winId()).toImage()
 
     def pixel_color_in_area(self, rectangle, color):
         """
@@ -197,38 +219,37 @@ class Macro:
         height = rectangle[3]
         color = to_lower(color)
         
-        img = QPixmap.grabWindow(QApplication.desktop().winId()).toImage().copy(x, y, width+1, height+1);
+        img = Macro.__grabDesktop().copy(x, y, width + 1, height + 1);
         
-        cur_y=cur_x=0
+        cur_y = cur_x = 0
         while( cur_y <= height ):
             cur_x=0
             while ( cur_x <= width ):
                 cur_color = QColor(img.pixel(QPoint(cur_x, cur_y)))
-                if(str(color)==str(cur_color.name())):
+                if(str(color) == str(cur_color.name())):
                     return True, [cur_x+x, cur_y+y]
-                cur_x+=self.pixel_search_speed
+                cur_x += self.pixel_search_speed
             cur_y+=1
         return False, [-1, -1]
         
     @staticmethod
     def color_of_pixel(x, y):
         """Returns the pixel color of the pixel at coordinates x, y."""
-        c = QColor(QPixmap.grabWindow(QApplication.desktop().winId()).toImage().pixel(x, y))
-        return to_upper(str(c.name()))
+        return to_upper(str(Macro.__grabDesktop().pixel(x, y).name()))
         
     @staticmethod
-    def wait_for_pixel_color(point, color, timeout):
+    def wait_for_pixel_color(point, color, interval):
         """
         Waits till the point 'point' is of color 'color', checking
-        every 'timeout' milliseconds. Then it simply exits.
+        every 'interval' milliseconds. Then it simply exits.
         point is a tuple [x, y]
         """
-        color=to_upper(color)
-        while color_of_pixel(point[0], point[1]) != color:
-            time.sleep(timeout / 1000.0)
+        color = to_upper(color)
+        while Macro.color_of_pixel(point[0], point[1]) != color:
+            time.sleep(interval / 1000.0)
 
     @staticmethod
-    def wait_for_pixel_colors(points_colors, for_all, timeout):
+    def wait_for_pixel_colors(points_colors, for_all, interval):
         """
         'points_colors' argument is a Ax2 array, where A is the number of pixels you want to check.
         For example, the following code:
@@ -239,7 +260,7 @@ class Macro:
         is found then the function exits.
         Note that the pixels are checked one by one in the row they are specified.
         Once all pixels have been checked then the function sleeps for
-        'timeout' milliseconds before checking the pixels one by one again. If 'for_all'
+        'interval' milliseconds before checking the pixels one by one again. If 'for_all'
         if false, then the function exits if one pixel of all specified has the
         according color, but if 'for_all' is true, then all the specified pixels have to
         have their according color.
@@ -259,11 +280,11 @@ class Macro:
                 for pair in points_colors:
                     point = pair[0]
                     color = pair[1]
-                    if(color_of_pixel(point[0], point[1]) == color):
+                    if(Macro.color_of_pixel(point[0], point[1]) == color):
                         found = True
                         break
                     index+=1
-                time.sleep(timeout/1000.0)
+                time.sleep(interval / 1000.0)
             return index
         else:
             while True:
@@ -271,29 +292,29 @@ class Macro:
                 for pair in points_colors:
                     point = pair[0]
                     color = pair[1]
-                    if(color_of_pixel(point[0], point[1]) == color):
+                    if(Macro.color_of_pixel(point[0], point[1]) == color):
                         cur_checked+=1
                         if(cur_checked==len(points_color)):
                             return 0
                     else:
                         break;
-                time.sleep(timeout/1000.0)
+                time.sleep(interval / 1000.0)
             
     @staticmethod
-    def wait_for_no_pixel_color(point, color, timeout):
+    def wait_for_no_pixel_color(point, color, interval):
         """
         Waits till the point 'point' is not of color 'color', checking
-        every 'timeout' milliseconds. Then it simply exits.
+        every 'interval' milliseconds. Then it simply exits.
         point is a tuple [x, y] while color is a string (e.g. #000000)
         """
-        color=to_upper(color)
-        while self.color_of_pixel(point[0], point[1]) == color:
-            time.sleep(timeout/1000.0)
+        color = to_upper(color)
+        while Macro.color_of_pixel(point[0], point[1]) == color:
+            time.sleep(interval / 1000.0)
 
-    def wait_for_pixel_color_in_area(self, rectangle, color, timeout):
+    def wait_for_pixel_color_in_area(self, rectangle, color, interval):
         """
         Waits till the rectangle 'rectangle' contains a pixel of color
-        'color', checking every 'timeout' milliseconds. Then it simply
+        'color', checking every 'interval' milliseconds. Then it simply
         exits returning the pixel where the color was found first.
         The rectangle is a tuple [x, y, width, height], where x, y the
         coordinates of the top left corner and width, height the width
@@ -301,16 +322,17 @@ class Macro:
         The color is a string with a hexadecimal representation of 
         a color (e.g. #000000)
         """
-        exists, point = self.pixel_color_in_area(rectangle, color)
+        exists = False
+        point = []
         while not exists:
-            time.sleep(timeout/1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
+            time.sleep(interval / 1000.0)
         return point
 
-    def wait_for_no_pixel_color_in_area(self, rectangle, color, timeout):
+    def wait_for_no_pixel_color_in_area(self, rectangle, color, interval):
         """
         Waits till the rectangle 'rectangle' does not contain
-        a pixel of color 'color', checking every 'timeout' milliseconds.
+        a pixel of color 'color', checking every 'interval' milliseconds.
         Then it simply exits returning the pixel where the color was found
         first.
         The rectangle is a tuple [x, y, width, height], where x, y the
@@ -321,54 +343,54 @@ class Macro:
         """
         exists, point = self.pixel_color_in_area(rectangle, color)
         while exists:
-            time.sleep(timeout / 1000.0)
+            time.sleep(interval / 1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
         return point
 
-    def wait_for_pixel_color_special(self, function, times, point, color, timeout):
+    def wait_for_pixel_color_special(self, function, times, point, color, interval):
         """
         Waits till the point 'point' is of color 'color', checking
-        every 'timeout' milliseconds. It will run the function 'function'
+        every 'interval' milliseconds. It will run the function 'function'
         when it has checked 'times' times for the pixel color (and it
         hasn't found it, otherwise it exits).
         """
         if(times < 1):
             print "Invalid parameter passed for wait_for_pixel_color_special! 'times' should be 1 or more."
             return
-        color=to_upper(color)
-        times_counter=0
+        color = to_upper(color)
+        times_counter = 0
         
-        while self.color_of_pixel(point[0], point[1]) != color:
+        while Macro.color_of_pixel(point[0], point[1]) != color:
             times_counter+=1
             if(times==times_counter):
-                times_counter=0
+                times_counter = 0
                 function()
-            time.sleep(timeout/1000.0)
+            time.sleep(interval / 1000.0)
 
-    def wait_for_no_pixel_color_special(self, function, times, point, color, timeout):
+    def wait_for_no_pixel_color_special(self, function, times, point, color, interval):
         """
         Waits till the point 'point' is not of color 'color', checking
-        every 'timeout' milliseconds. It will run the function 'function'
+        every 'interval' milliseconds. It will run the function 'function'
         when it has checked 'times' times for the pixel color (and it
         hasn't found it, otherwise it exits).
         """
         if(times < 1):
             print "Invalid parameter passed for wait_for_pixel_color_special! 'times' should be 1 or more."
             return
-        color=to_upper(color)
-        times_counter=0
+        color = to_upper(color)
+        times_counter = 0
         
-        while self.color_of_pixel(point[0], point[1]) == color:
+        while Macro.color_of_pixel(point[0], point[1]) == color:
             times_counter+=1
             if(times==times_counter):
-                times_counter=0
+                times_counter = 0
                 function()
-            time.sleep(timeout/1000.0)
+            time.sleep(interval / 1000.0)
 
-    def wait_for_pixel_color_in_area_special(self, function, times, rectangle, color, timeout):
+    def wait_for_pixel_color_in_area_special(self, function, times, rectangle, color, interval):
         """
         Waits till the rectangle 'rectangle' contains a pixel of color
-        'color', checking every 'timeout' milliseconds. It will run the
+        'color', checking every 'interval' milliseconds. It will run the
         function 'function' when it has checked 'times' times for the pixel
         color (and it hasn't found it, otherwise it exits).
         The rectangle is a tuple [x, y, width, height], where x, y the
@@ -390,15 +412,15 @@ class Macro:
             if(times_counter == times):
                 times_counter = 0
                 function()
-            time.sleep(timeout / 1000.0)
+            time.sleep(interval / 1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
             
         return point
 
-    def wait_for_no_pixel_color_in_area_special(self, function, times, rectangle, color, timeout):
+    def wait_for_no_pixel_color_in_area_special(self, function, times, rectangle, color, interval):
         """
         Waits till the rectangle 'rectangle' does not contain
-        a pixel of color 'color', checking every 'timeout' milliseconds.
+        a pixel of color 'color', checking every 'interval' milliseconds.
         It will run the function 'function' when it has checked 'times'
         times for the pixel color (and it hasn't found it, otherwise it exits).
         The rectangle is a tuple [x, y, width, height], where x, y the
@@ -420,7 +442,7 @@ class Macro:
             if(times_counter == times):
                 times_counter = 0
                 function()
-            time.sleep(timeout / 1000.0)
+            time.sleep(interval / 1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
             
         return point
@@ -432,6 +454,6 @@ class Macro:
         coordinates of the top left corner and width, height the width
         and the height of the rectangle.
         """
-        img = QPixmap.grabWindow(QApplication.desktop().winId()).toImage().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]))
+        img = Macro.__grabDesktop().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]))
         img.save(filename, "PNG", 100);
 

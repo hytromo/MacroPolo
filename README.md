@@ -35,7 +35,12 @@ Macro.keyboard(['ls -al', '@@Return'])
 ~~~
 
 Below you can see the result (on the left) of a python script using `macropolo` (on the right)
+
 ![MacroPolo example usage](http://i.imgur.com/aXj0Sjg.gif)
+
+Here's another example that uses some pixel and cursor functions
+
+![MacroPolo pixel functions](http://i.imgur.com/dH5wKeg.gif)
 
 Most methods are `static`. The only methods that require an instance of `Macro()` are the ones that have to do with pixel searching because they use a specified search speed (like `pixel_color_in_area_counter()` etc)
 
@@ -72,14 +77,10 @@ Variables
 ---------
 MOUSE_ABS
 
-app
-
-key_codes
-
-key_list
-
 Functions
 ---------
+needQApp(func)
+
 to_lower(string)
     Returns python or Qt String to lower
 
@@ -93,13 +94,18 @@ Macro
     ------------------
     macropolo.Macro
 
+    Class variables
+    ---------------
+    APP
+
+    KEY_LIST
+
+    SHIFT_KEY_LIST
+
     Static methods
     --------------
     color_of_pixel(x, y)
         Returns the pixel color of the pixel at coordinates x, y.
-
-    get_cursos_pos()
-        Returns the cursor pos as a tuple
 
     key_down(key)
         This is a more specific function than keyboard(). It can send specific
@@ -128,6 +134,12 @@ Macro
     middle_click_to(x, y)
         Middle clicks the cursor to the x, y coordinates
 
+    mouse_event(x, y, button, eventType)
+        Generates a mouse event, useful for mouse press or release.
+        x, y the coordinates of the event
+        button is 'left', 'right' or 'middle'
+        event type is either 'press' or 'release'
+
     move_cursor_to(x, y)
         Moves the cursor to the x, y coordinates
 
@@ -140,17 +152,17 @@ Macro
         coordinates of the top left corner and width, height the width
         and the height of the rectangle.
 
-    wait_for_no_pixel_color(point, color, timeout)
+    wait_for_no_pixel_color(point, color, interval)
         Waits till the point 'point' is not of color 'color', checking
-        every 'timeout' milliseconds. Then it simply exits.
+        every 'interval' milliseconds. Then it simply exits.
         point is a tuple [x, y] while color is a string (e.g. #000000)
 
-    wait_for_pixel_color(point, color, timeout)
+    wait_for_pixel_color(point, color, interval)
         Waits till the point 'point' is of color 'color', checking
-        every 'timeout' milliseconds. Then it simply exits.
+        every 'interval' milliseconds. Then it simply exits.
         point is a tuple [x, y]
 
-    wait_for_pixel_colors(points_colors, for_all, timeout)
+    wait_for_pixel_colors(points_colors, for_all, interval)
         'points_colors' argument is a Ax2 array, where A is the number of pixels you want to check.
         For example, the following code:
             points_colors = [ [[5, 6], "#FFFFFF"], [[8, 9], "#000000"] ]
@@ -160,7 +172,7 @@ Macro
         is found then the function exits.
         Note that the pixels are checked one by one in the row they are specified.
         Once all pixels have been checked then the function sleeps for
-        'timeout' milliseconds before checking the pixels one by one again. If 'for_all'
+        'interval' milliseconds before checking the pixels one by one again. If 'for_all'
         if false, then the function exits if one pixel of all specified has the
         according color, but if 'for_all' is true, then all the specified pixels have to
         have their according color.
@@ -179,6 +191,8 @@ Macro
     Methods
     -------
     __init__(self)
+
+    get_cursos_pos(*args, **kwargs)
 
     pixel_color_in_area(self, rectangle, color)
         Searches the rectangle area 'rectangle' for the color 'color'.
@@ -203,9 +217,9 @@ Macro
 
     setPixelSearchSpeed(self, speed)
 
-    wait_for_no_pixel_color_in_area(self, rectangle, color, timeout)
+    wait_for_no_pixel_color_in_area(self, rectangle, color, interval)
         Waits till the rectangle 'rectangle' does not contain
-        a pixel of color 'color', checking every 'timeout' milliseconds.
+        a pixel of color 'color', checking every 'interval' milliseconds.
         Then it simply exits returning the pixel where the color was found
         first.
         The rectangle is a tuple [x, y, width, height], where x, y the
@@ -214,9 +228,9 @@ Macro
         The color is a string with a hexadecimal representation of 
         a color (e.g. #000000)
 
-    wait_for_no_pixel_color_in_area_special(self, function, times, rectangle, color, timeout)
+    wait_for_no_pixel_color_in_area_special(self, function, times, rectangle, color, interval)
         Waits till the rectangle 'rectangle' does not contain
-        a pixel of color 'color', checking every 'timeout' milliseconds.
+        a pixel of color 'color', checking every 'interval' milliseconds.
         It will run the function 'function' when it has checked 'times'
         times for the pixel color (and it hasn't found it, otherwise it exits).
         The rectangle is a tuple [x, y, width, height], where x, y the
@@ -225,15 +239,15 @@ Macro
         The color is a string with a hexadecimal representation of 
         a color (e.g. #000000)
 
-    wait_for_no_pixel_color_special(self, function, times, point, color, timeout)
+    wait_for_no_pixel_color_special(self, function, times, point, color, interval)
         Waits till the point 'point' is not of color 'color', checking
-        every 'timeout' milliseconds. It will run the function 'function'
+        every 'interval' milliseconds. It will run the function 'function'
         when it has checked 'times' times for the pixel color (and it
         hasn't found it, otherwise it exits).
 
-    wait_for_pixel_color_in_area(self, rectangle, color, timeout)
+    wait_for_pixel_color_in_area(self, rectangle, color, interval)
         Waits till the rectangle 'rectangle' contains a pixel of color
-        'color', checking every 'timeout' milliseconds. Then it simply
+        'color', checking every 'interval' milliseconds. Then it simply
         exits returning the pixel where the color was found first.
         The rectangle is a tuple [x, y, width, height], where x, y the
         coordinates of the top left corner and width, height the width
@@ -241,9 +255,9 @@ Macro
         The color is a string with a hexadecimal representation of 
         a color (e.g. #000000)
 
-    wait_for_pixel_color_in_area_special(self, function, times, rectangle, color, timeout)
+    wait_for_pixel_color_in_area_special(self, function, times, rectangle, color, interval)
         Waits till the rectangle 'rectangle' contains a pixel of color
-        'color', checking every 'timeout' milliseconds. It will run the
+        'color', checking every 'interval' milliseconds. It will run the
         function 'function' when it has checked 'times' times for the pixel
         color (and it hasn't found it, otherwise it exits).
         The rectangle is a tuple [x, y, width, height], where x, y the
@@ -252,8 +266,8 @@ Macro
         The color is a string with a hexadecimal representation of 
         a color (e.g. #000000)
 
-    wait_for_pixel_color_special(self, function, times, point, color, timeout)
+    wait_for_pixel_color_special(self, function, times, point, color, interval)
         Waits till the point 'point' is of color 'color', checking
-        every 'timeout' milliseconds. It will run the function 'function'
+        every 'interval' milliseconds. It will run the function 'function'
         when it has checked 'times' times for the pixel color (and it
         hasn't found it, otherwise it exits).
