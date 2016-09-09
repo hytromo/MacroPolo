@@ -70,99 +70,66 @@ The above outputs:
 'Middle clicks the cursor to the x, y coordinates'
 ~~~
 
-Module macropolo
-----------------
+# Macro
 
-Variables
----------
-MOUSE_ABS
+- [Static methods](#Static methods)
 
-Functions
----------
-needQApp(func)
+    - [save_section_of_the_screen](#save_section_of_the_screen)
+    - [right_click_to](#right_click_to)
+    - [wait_for_no_pixel_color](#wait_for_no_pixel_color)
+    - [key_up](#key_up)
+    - [wait_for_pixel_colors](#wait_for_pixel_colors)
+    - [mouse_event](#mouse_event)
+    - [color_of_pixel](#color_of_pixel)
+    - [move_cursor_to](#move_cursor_to)
+    - [left_click_to](#left_click_to)
+    - [middle_click_to](#middle_click_to)
+    - [keyboard](#keyboard)
+    - [wait_for_pixel_color](#wait_for_pixel_color)
+    - [key_down](#key_down)
 
-to_lower(string)
-    Returns python or Qt String to lower
+- [Instance methods](#Instance methods)
 
-to_upper(string)
-    Returns python or Qt String to upper
+    - [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_area_special)
+    - [wait_for_pixel_color_special](#wait_for_pixel_color_special)
+    - [pixel_color_in_area](#pixel_color_in_area)
+    - [wait_for_no_pixel_color_special](#wait_for_no_pixel_color_special)
+    - [wait_for_no_pixel_color_in_area](#wait_for_no_pixel_color_in_area)
+    - [wait_for_pixel_color_in_area](#wait_for_pixel_color_in_area)
+    - [pixel_color_in_area_counter](#pixel_color_in_area_counter)
+    - [wait_for_no_pixel_color_in_area_special](#wait_for_no_pixel_color_in_area_special)
 
-Classes
--------
-Macro 
-    Ancestors (in MRO)
-    ------------------
-    macropolo.Macro
+## Static methods
 
-    Class variables
-    ---------------
-    APP
+### save_section_of_the_screen
 
-    KEY_LIST
-
-    SHIFT_KEY_LIST
-
-    Static methods
-    --------------
-    color_of_pixel(x, y)
-        Returns the pixel color of the pixel at coordinates x, y.
-
-    key_down(key)
-        This is a more specific function than keyboard(). It can send specific
-        key-pressed events, in case you want to do keyboard combinations, like Alt+F4
-        The argument can only be a string. If you want to send (e.g.) Alt+F4 then you
-        should call it as:
-        key_down("Alt")
-        key_down("F4")
-        time.sleep(0.2)
-        key_up("Alt")
-        key_up("F4")
-
-    key_up(key)
-        It releases a pressed key. See the key_down(key) function for more info.
-
-    keyboard(key)
-        Types the tuple 'key' to the screen. For example you can say:
-        ["Alex was in a bad mood lately", "Return", "A", "B", "1", "2", "comma"] and it will try to print:
-        Alex was in a bad mood lately
-        AB12,
-        A simple string rather than a tuple may as well be passed to this function.
-
-    left_click_to(x, y)
-        Left clicks the cursor to the x, y coordinates
-
-    middle_click_to(x, y)
-        Middle clicks the cursor to the x, y coordinates
-
-    mouse_event(x, y, button, eventType)
-        Generates a mouse event, useful for mouse press or release.
-        x, y the coordinates of the event
-        button is 'left', 'right' or 'middle'
-        event type is either 'press' or 'release'
-
-    move_cursor_to(x, y)
-        Moves the cursor to the x, y coordinates
-
-    right_click_to(x, y)
-        Right clicks the cursor to the x, y coordinates
-
-    save_section_of_the_screen(rectangle, filename)
-        Saves the 'rectangle' in 'filename'.
+Saves the 'rectangle' in 'filename'.
         The rectangle is a tuple [x, y, width, height], where x, y the
         coordinates of the top left corner and width, height the width
         and the height of the rectangle.
+        
 
-    wait_for_no_pixel_color(point, color, interval)
+### right_click_to
+
+Right clicks the cursor to the x, y coordinates
+
+### wait_for_no_pixel_color
+
+
         Waits till the point 'point' is not of color 'color', checking
         every 'interval' milliseconds. Then it simply exits.
         point is a tuple [x, y] while color is a string (e.g. #000000)
+        
 
-    wait_for_pixel_color(point, color, interval)
-        Waits till the point 'point' is of color 'color', checking
-        every 'interval' milliseconds. Then it simply exits.
-        point is a tuple [x, y]
+### key_up
 
-    wait_for_pixel_colors(points_colors, for_all, interval)
+
+        It releases a pressed key. See the key_down(key) function for more info.
+        
+
+### wait_for_pixel_colors
+
+
         'points_colors' argument is a Ax2 array, where A is the number of pixels you want to check.
         For example, the following code:
             points_colors = [ [[5, 6], "#FFFFFF"], [[8, 9], "#000000"] ]
@@ -183,79 +150,68 @@ Macro
         inside the array and e.g. the third pixel-color pair was confirmed, then the function
         would return 2 etc. It is meaningless to return the index if 'for_all' is true, thus
         0 is returned if 'for_all' is true.
+        
 
-    Instance variables
-    ------------------
-    pixel_search_speed
+### mouse_event
 
-    Methods
-    -------
-    __init__(self)
+Generates a mouse event, useful for mouse press or release.
+        x, y the coordinates of the event
+        button is 'left', 'right' or 'middle'
+        event type is either 'press' or 'release'
 
-    get_cursor_pos(*args, **kwargs)
+### color_of_pixel
 
-    pixel_color_in_area(self, rectangle, color)
-        Searches the rectangle area 'rectangle' for the color 'color'.
-        If the 'color' is found inside 'rectangle' then it returns True
-        as first argument and the point where the pixel was found as the 2nd argument
-        If nothing is found then it simply returns False.
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+Returns the pixel color of the pixel at coordinates x, y.
 
-    pixel_color_in_area_counter(self, rectangle, color)
-        Searches the rectangle area 'rectangle' for the color 'color'.
-        It returns an integer indicating the times that the 'color'
-        was found inside the 'rectangle'.
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+### move_cursor_to
 
-    setPixelSearchSpeed(self, speed)
+Moves the cursor to the x, y coordinates
 
-    wait_for_no_pixel_color_in_area(self, rectangle, color, interval)
-        Waits till the rectangle 'rectangle' does not contain
-        a pixel of color 'color', checking every 'interval' milliseconds.
-        Then it simply exits returning the pixel where the color was found
-        first.
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+### left_click_to
 
-    wait_for_no_pixel_color_in_area_special(self, function, times, rectangle, color, interval)
-        Waits till the rectangle 'rectangle' does not contain
-        a pixel of color 'color', checking every 'interval' milliseconds.
-        It will run the function 'function' when it has checked 'times'
-        times for the pixel color (and it hasn't found it, otherwise it exits).
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+Left clicks the cursor to the x, y coordinates
 
-    wait_for_no_pixel_color_special(self, function, times, point, color, interval)
-        Waits till the point 'point' is not of color 'color', checking
-        every 'interval' milliseconds. It will run the function 'function'
-        when it has checked 'times' times for the pixel color (and it
-        hasn't found it, otherwise it exits).
+### middle_click_to
 
-    wait_for_pixel_color_in_area(self, rectangle, color, interval)
-        Waits till the rectangle 'rectangle' contains a pixel of color
-        'color', checking every 'interval' milliseconds. Then it simply
-        exits returning the pixel where the color was found first.
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+Middle clicks the cursor to the x, y coordinates
 
-    wait_for_pixel_color_in_area_special(self, function, times, rectangle, color, interval)
+### keyboard
+
+
+        Types the tuple 'key' to the screen. For example you can say:
+        ["Alex was in a bad mood lately", "Return", "A", "B", "1", "2", "comma"] and it will try to print:
+        Alex was in a bad mood lately
+        AB12,
+        A simple string rather than a tuple may as well be passed to this function.
+        
+
+### wait_for_pixel_color
+
+
+        Waits till the point 'point' is of color 'color', checking
+        every 'interval' milliseconds. Then it simply exits.
+        point is a tuple [x, y]
+        
+
+### key_down
+
+
+        This is a more specific function than keyboard(). It can send specific
+        key-pressed events, in case you want to do keyboard combinations, like Alt+F4
+        The argument can only be a string. If you want to send (e.g.) Alt+F4 then you
+        should call it as:
+        key_down("Alt")
+        key_down("F4")
+        time.sleep(0.2)
+        key_up("Alt")
+        key_up("F4")
+        
+
+## Instance methods
+
+### wait_for_pixel_color_in_area_special
+
+
         Waits till the rectangle 'rectangle' contains a pixel of color
         'color', checking every 'interval' milliseconds. It will run the
         function 'function' when it has checked 'times' times for the pixel
@@ -265,9 +221,89 @@ Macro
         and the height of the rectangle.
         The color is a string with a hexadecimal representation of 
         a color (e.g. #000000)
+        
 
-    wait_for_pixel_color_special(self, function, times, point, color, interval)
+### wait_for_pixel_color_special
+
+
         Waits till the point 'point' is of color 'color', checking
         every 'interval' milliseconds. It will run the function 'function'
         when it has checked 'times' times for the pixel color (and it
         hasn't found it, otherwise it exits).
+        
+
+### pixel_color_in_area
+
+
+        Searches the rectangle area 'rectangle' for the color 'color'.
+        If the 'color' is found inside 'rectangle' then it returns True
+        as first argument and the point where the pixel was found as the 2nd argument
+        If nothing is found then it simply returns False.
+        The rectangle is a tuple [x, y, width, height], where x, y the
+        coordinates of the top left corner and width, height the width
+        and the height of the rectangle.
+        The color is a string with a hexadecimal representation of 
+        a color (e.g. #000000)
+        
+
+### wait_for_no_pixel_color_special
+
+
+        Waits till the point 'point' is not of color 'color', checking
+        every 'interval' milliseconds. It will run the function 'function'
+        when it has checked 'times' times for the pixel color (and it
+        hasn't found it, otherwise it exits).
+        
+
+### wait_for_no_pixel_color_in_area
+
+
+        Waits till the rectangle 'rectangle' does not contain
+        a pixel of color 'color', checking every 'interval' milliseconds.
+        Then it simply exits returning the pixel where the color was found
+        first.
+        The rectangle is a tuple [x, y, width, height], where x, y the
+        coordinates of the top left corner and width, height the width
+        and the height of the rectangle.
+        The color is a string with a hexadecimal representation of 
+        a color (e.g. #000000)
+        
+
+### wait_for_pixel_color_in_area
+
+
+        Waits till the rectangle 'rectangle' contains a pixel of color
+        'color', checking every 'interval' milliseconds. Then it simply
+        exits returning the pixel where the color was found first.
+        The rectangle is a tuple [x, y, width, height], where x, y the
+        coordinates of the top left corner and width, height the width
+        and the height of the rectangle.
+        The color is a string with a hexadecimal representation of 
+        a color (e.g. #000000)
+        
+
+### pixel_color_in_area_counter
+
+
+        Searches the rectangle area 'rectangle' for the color 'color'.
+        It returns an integer indicating the times that the 'color'
+        was found inside the 'rectangle'.
+        The rectangle is a tuple [x, y, width, height], where x, y the
+        coordinates of the top left corner and width, height the width
+        and the height of the rectangle.
+        The color is a string with a hexadecimal representation of 
+        a color (e.g. #000000)
+        
+
+### wait_for_no_pixel_color_in_area_special
+
+
+        Waits till the rectangle 'rectangle' does not contain
+        a pixel of color 'color', checking every 'interval' milliseconds.
+        It will run the function 'function' when it has checked 'times'
+        times for the pixel color (and it hasn't found it, otherwise it exits).
+        The rectangle is a tuple [x, y, width, height], where x, y the
+        coordinates of the top left corner and width, height the width
+        and the height of the rectangle.
+        The color is a string with a hexadecimal representation of 
+        a color (e.g. #000000)
