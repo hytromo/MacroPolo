@@ -72,7 +72,7 @@ The above outputs:
 
 # Macro
 
-- [Static methods](#Static methods)
+- [Static methods](#static-methods)
 
     - [save_section_of_the_screen](#save_section_of_the_screen)
     - [right_click_to](#right_click_to)
@@ -88,7 +88,7 @@ The above outputs:
     - [wait_for_pixel_color](#wait_for_pixel_color)
     - [key_down](#key_down)
 
-- [Instance methods](#Instance methods)
+- [Instance methods](#instance-methods)
 
     - [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_area_special)
     - [wait_for_pixel_color_special](#wait_for_pixel_color_special)
