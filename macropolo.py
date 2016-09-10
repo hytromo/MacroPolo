@@ -529,9 +529,23 @@ class Macro:
     @staticmethod
     def wait_for_no_pixel_color(point, color, interval):
         """
-        Waits till the point 'point' is not of color 'color', checking
-        every 'interval' milliseconds. Then it simply exits.
-        point is a tuple [x, y] while color is a string (e.g. #000000)
+        > Description
+            Waits for a pixel to not be of a specific color
+            
+        > Parameters
+            point (list): a list containing the x, y coordinates of the pixel on the screen
+            color (str): the HTML representation of the color to wait for the point to change from
+            interval (int): the interval in milliseconds between each check
+
+        > Returns
+            None
+
+        > Example
+            # wait for pixel 100, 100 to not be red, checking every 1 second
+            Macro.wait_for_no_pixel_color([100, 100], '#ff0000', 1000)
+
+            # just wait for the pixel at 100, 100 to change color, checking every 1 second
+            Macro.wait_for_no_pixel_color([100, 100], Macro.color_of_pixel(100, 100), 1000)
         """
         color = to_upper(color)
         while Macro.color_of_pixel(point[0], point[1]) == color:
@@ -539,14 +553,24 @@ class Macro:
 
     def wait_for_pixel_color_in_area(self, rectangle, color, interval):
         """
-        Waits till the rectangle 'rectangle' contains a pixel of color
-        'color', checking every 'interval' milliseconds. Then it simply
-        exits returning the pixel where the color was found first.
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+        > Description
+            Waits for a specific color to be found in an area of the screen
+
+            Please note that this function is 100% accurate only with a pixel search speed of 1. See more at @ref:set_pixel_search_speed
+            
+        > Parameters
+            rectangle (list): the area of the screen to search in the format [x, y, width, height]
+            color (str): the HTML representation of the color to search for
+            interval (int): the interval in milliseconds between each check
+
+        > Returns
+            point (list): the point that contains the x, y coordinates of the pixel found to have the specified color
+
+        > Example
+            # wait till the function finds a black pixel in an area of the screen, checking every 5 seconds
+            point = Macro.wait_for_pixel_color_in_area([0, 0, 500, 500], '#000000', 5000)
+
+            print 'black found at', point
         """
         exists = False
         point = []
@@ -557,28 +581,55 @@ class Macro:
 
     def wait_for_no_pixel_color_in_area(self, rectangle, color, interval):
         """
-        Waits till the rectangle 'rectangle' does not contain
-        a pixel of color 'color', checking every 'interval' milliseconds.
-        Then it simply exits returning the pixel where the color was found
-        first.
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+        > Description
+            Waits for a specific color to not be present in an area of the screen
+
+            Please note that this function is 100% accurate only with a pixel search speed of 1. See more at @ref:set_pixel_search_speed
+            
+        > Parameters
+            rectangle (list): the area of the screen to search in the format [x, y, width, height]
+            color (str): the HTML representation of the color to search for
+            interval (int): the interval in milliseconds between each check
+
+        > Returns
+            None
+
+        > Example
+            # wait till there are no black pixels in an area of the screen
+            Macro.wait_for_no_pixel_color_in_area([0, 0, 500, 500], '#000000', 5000)
+
+            print 'there are no black pixels at [0, 0, 500, 500]' 
         """
         exists, point = self.pixel_color_in_area(rectangle, color)
         while exists:
             time.sleep(interval / 1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
-        return point
 
     def wait_for_pixel_color_special(self, function, times, point, color, interval):
         """
-        Waits till the point 'point' is of color 'color', checking
-        every 'interval' milliseconds. It will run the function 'function'
-        when it has checked 'times' times for the pixel color (and it
-        hasn't found it, otherwise it exits).
+        > Description
+            Waits for a pixel to be of specific color. In between checking this method will run a user provided function to run which can command this method to quit
+
+            This method will exit either because the pixel becomes the specified color or the user provided function returns false
+
+        > Parameters
+            function (function): the function to run every `times` checks. The function can return false to make this method to quit without waiting for the pixel to become the specified color
+            times (int): the times to wait `interval` milliseconds before running `function`
+            point (list): the point containing the x, y coordinates of the pixel
+            color (str): the HTML representation of the color to wait for
+            interval (int): the interval in milliseconds between each check
+
+        > Returns
+            None
+
+        > Example
+            # returns true if the mouse cursor is not at the top left corner of the screen
+            def mouse_not_top_left():
+                return Macro.get_cursor_pos() != [0, 0]
+
+            # will exit if the pixel 100, 100 becomes green (checking every 1 second)
+            # or if the mouse position is at 0, 0 (checking every 2 * 1 = 2 seconds)
+            Macro().wait_for_pixel_color_special(mouse_not_top_left, 2, [100, 100], '#00ff00', 1000)
         """
         if(times < 1):
             print "Invalid parameter passed for wait_for_pixel_color_special! 'times' should be 1 or more."
@@ -588,42 +639,35 @@ class Macro:
         
         while Macro.color_of_pixel(point[0], point[1]) != color:
             times_counter += 1
-            if(times==times_counter):
+            if(times == times_counter):
                 times_counter = 0
-                function()
+                if not function():
+                    return
             time.sleep(interval / 1000.0)
 
     def wait_for_no_pixel_color_special(self, function, times, point, color, interval):
         """
-        Waits till the point 'point' is not of color 'color', checking
-        every 'interval' milliseconds. It will run the function 'function'
-        when it has checked 'times' times for the pixel color (and it
-        hasn't found it, otherwise it exits).
+        > Description
+            The same as @ref:wait_for_pixel_color_special but instead waits the specified pixel to not be the specified color
         """
         if(times < 1):
-            print "Invalid parameter passed for wait_for_pixel_color_special! 'times' should be 1 or more."
+            print "Invalid parameter passed for wait_for_no_pixel_color_special! 'times' should be 1 or more."
             return
         color = to_upper(color)
         times_counter = 0
         
         while Macro.color_of_pixel(point[0], point[1]) == color:
             times_counter += 1
-            if(times==times_counter):
+            if(times == times_counter):
                 times_counter = 0
-                function()
+                if not function():
+                    return
             time.sleep(interval / 1000.0)
 
     def wait_for_pixel_color_in_area_special(self, function, times, rectangle, color, interval):
         """
-        Waits till the rectangle 'rectangle' contains a pixel of color
-        'color', checking every 'interval' milliseconds. It will run the
-        function 'function' when it has checked 'times' times for the pixel
-        color (and it hasn't found it, otherwise it exits).
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+        > Description
+            The same as @ref:wait_for_pixel_color_special but instead waits the specified area of the screen to contain the specified color
         """
         
         if(times < 1):
@@ -637,7 +681,8 @@ class Macro:
             times_counter += 1
             if(times_counter == times):
                 times_counter = 0
-                function()
+                if not function():
+                    return
             time.sleep(interval / 1000.0)
             exists, point = self.pixel_color_in_area(rectangle, color)
             
@@ -645,15 +690,8 @@ class Macro:
 
     def wait_for_no_pixel_color_in_area_special(self, function, times, rectangle, color, interval):
         """
-        Waits till the rectangle 'rectangle' does not contain
-        a pixel of color 'color', checking every 'interval' milliseconds.
-        It will run the function 'function' when it has checked 'times'
-        times for the pixel color (and it hasn't found it, otherwise it exits).
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
-        The color is a string with a hexadecimal representation of 
-        a color (e.g. #000000)
+        > Description
+            The same as @ref:wait_for_pixel_color_in_area_special but instead waits the specified area of the screen to not contain the specified color
         """
         
         if(times < 1):
@@ -675,10 +713,20 @@ class Macro:
 
     @staticmethod
     def save_section_of_the_screen(rectangle, filename):
-        """Saves the 'rectangle' in 'filename'.
-        The rectangle is a tuple [x, y, width, height], where x, y the
-        coordinates of the top left corner and width, height the width
-        and the height of the rectangle.
+        """
+        > Description
+            Saves a section of the screen as a png file, useful for OCR using other tools
+
+        > Parameters
+            rectangle (list): the area of the screen to search in the format [x, y, width, height]
+            filename (str): the filename of the file to save the image
+
+        > Returns
+            None
+
+        > Example
+            # save a section of the screen to /tmp/file.png
+            Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png')
         """
         img = Macro.__grabDesktop().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]))
         img.save(filename, "PNG", 100);

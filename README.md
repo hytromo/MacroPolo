@@ -112,13 +112,13 @@ _Returns the pixel color of the pixel at coordinates x, y_
 
 * **Parameters**
 
-`x` (`int`) the x coordinate of the screen
+`x` (`int`): the x coordinate of the screen
 
-`y` (`int`) the y coordinate of the screen
+`y` (`int`): the y coordinate of the screen
 
 * **Return values**
 
-`pixel_color` (`str`) The uppercase HTML representation of the color at the x, y coordinates of the screen
+`pixel_color` (`str`): The uppercase HTML representation of the color at the x, y coordinates of the screen
 
 * **Example usage**
 
@@ -138,7 +138,7 @@ _Hold a specific key down, useful when you want to do key combinations, like Alt
 
 * **Parameters**
 
-`key` (`string`) The key to hold down
+`key` (`string`): The key to hold down
 
 * **Return values**
 
@@ -168,7 +168,7 @@ _Hold a specific key up, useful when you want to do key combinations, like Alt +
 
 * **Parameters**
 
-`key` (`string`) The key to hold up
+`key` (`string`): The key to hold up
 
 * **Return values**
 
@@ -200,7 +200,7 @@ _For all the available keys look into `Macro.KEY_LIST`_
 
 * **Parameters**
 
-`key` (`string`/`list`) If the `key` is a string, then it is simpy typed out. If it is a list of strings, every string in the list will be typed out. If a string in the list starts with `@@` then it is recognized as a special key and it is not typed out as is
+`key` (`string`/`list`): If the `key` is a string, then it is simpy typed out. If it is a list of strings, every string in the list will be typed out. If a string in the list starts with `@@` then it is recognized as a special key and it is not typed out as is
 
 * **Return values**
 
@@ -235,9 +235,9 @@ _Left clicks the mouse at x, y_
 
 * **Parameters**
 
-`x` (`int`) the x coordinate to left click to
+`x` (`int`): the x coordinate to left click to
 
-`y` (`int`) the y coordinate to left click to
+`y` (`int`): the y coordinate to left click to
 
 * **Return values**
 
@@ -261,9 +261,9 @@ _Middle clicks the mouse at x, y_
 
 * **Parameters**
 
-`x` (`int`) the x coordinate to middle click to
+`x` (`int`): the x coordinate to middle click to
 
-`y` (`int`) the y coordinate to middle click to
+`y` (`int`): the y coordinate to middle click to
 
 * **Return values**
 
@@ -287,13 +287,13 @@ _Generates a mouse press or release event on a specific pixel on the screen_
 
 * **Parameters**
 
-`x` (`int`) the x coordinate where the event will be generated
+`x` (`int`): the x coordinate where the event will be generated
 
-`y` (`int`) the y coordinate where the event will be generated
+`y` (`int`): the y coordinate where the event will be generated
 
-`button` (`str`) A string indicating which mouse button to press/release. One of 'left', 'right' or 'middle'
+`button` (`str`): A string indicating which mouse button to press/release. One of 'left', 'right' or 'middle'
 
-`eventType` (`str`) A string indicating the event type. One of 'press' or 'release'
+`eventType` (`str`): A string indicating the event type. One of 'press' or 'release'
 
 * **Return values**
 
@@ -323,9 +323,9 @@ _Moves the cursor to the x, y coordinates_
 
 * **Parameters**
 
-`x` (`int`) the x coordinate to move the cursor to
+`x` (`int`): the x coordinate to move the cursor to
 
-`y` (`int`) the y coordinate to move the cursor to
+`y` (`int`): the y coordinate to move the cursor to
 
 * **Return values**
 
@@ -349,9 +349,9 @@ _Right clicks the mouse at x, y_
 
 * **Parameters**
 
-`x` (`int`) the x coordinate to right click to
+`x` (`int`): the x coordinate to right click to
 
-`y` (`int`) the y coordinate to right click to
+`y` (`int`): the y coordinate to right click to
 
 * **Return values**
 
@@ -369,13 +369,58 @@ Macro.right_click_to(100, 100)
 
 ### `save_section_of_the_screen`
 
-Saves the 'rectangle' in 'filename'.The rectangle is a tuple [x, y, width, height], where x, y thecoordinates of the top left corner and width, height the widthand the height of the rectangle.
+* **Description**
+
+_Saves a section of the screen as a png file, useful for OCR using other tools_
+
+* **Parameters**
+
+`rectangle` (`list`): the area of the screen to search in the format [x, y, width, height]
+
+`filename` (`str`): the filename of the file to save the image
+
+* **Return values**
+
+`None`
+
+* **Example usage**
+
+```python
+# save a section of the screen to /tmp/file.png
+Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png')
+```
+
 
 ---
 
 ### `wait_for_no_pixel_color`
 
-Waits till the point 'point' is not of color 'color', checkingevery 'interval' milliseconds. Then it simply exits.point is a tuple [x, y] while color is a string (e.g. #000000)
+* **Description**
+
+_Waits for a pixel to not be of a specific color_
+
+* **Parameters**
+
+`point` (`list`): a list containing the x, y coordinates of the pixel on the screen
+
+`color` (`str`): the HTML representation of the color to wait for the point to change from
+
+`interval` (`int`): the interval in milliseconds between each check
+
+* **Return values**
+
+`None`
+
+* **Example usage**
+
+```python
+# wait for pixel 100, 100 to not be red, checking every 1 second
+Macro.wait_for_no_pixel_color([100, 100], '#ff0000', 1000)
+
+# just wait for the pixel at 100, 100 to change color, checking every 1 second
+Macro.wait_for_no_pixel_color([100, 100], Macro.color_of_pixel(100, 100), 1000)
+```
+
 
 ---
 
@@ -387,11 +432,11 @@ _Waits for a pixel to become a specific color_
 
 * **Parameters**
 
-`point` (`list`) a list containing the x, y coordinates of the pixel on the screen
+`point` (`list`): a list containing the x, y coordinates of the pixel on the screen
 
-`color` (`str`) the HTML representation of the color to wait for
+`color` (`str`): the HTML representation of the color to wait for
 
-`interval` (`int`) the interval in milliseconds between each check
+`interval` (`int`): the interval in milliseconds between each check
 
 * **Return values**
 
@@ -418,15 +463,15 @@ _Wait for pixels on the screen to match specified colors_
 
 * **Parameters**
 
-`points_colors` (`list`) a list of lists. The first item of each inner list is a list containing the x, y coordinates of a pixel and the second argument is the HTML representation of the color that it should have
+`points_colors` (`list`): a list of lists. The first item of each inner list is a list containing the x, y coordinates of a pixel and the second argument is the HTML representation of the color that it should have
 
-`for_all` (`bool`) if true, the function will wait for all the pixels to match their colors; if false the function will wait for any of the pixels to match their colors
+`for_all` (`bool`): if true, the function will wait for all the pixels to match their colors; if false the function will wait for any of the pixels to match their colors
 
-`interval` (`int`) the interval in milliseconds between each check
+`interval` (`int`): the interval in milliseconds between each check
 
 * **Return values**
 
-`pixel_index` (`int`) 0 if `for_all` is true. If `for_all` is false then `pixel_index` represents the index in `points_colors` that contain the pixel / color pair that satisfied the condition and made the function to quit
+`pixel_index` (`int`): 0 if `for_all` is true. If `for_all` is false then `pixel_index` represents the index in `points_colors` that contain the pixel / color pair that satisfied the condition and made the function to quit
 
 * **Example usage**
 
@@ -458,15 +503,15 @@ _Note that this function is 100% accurate and will return the 1st occurrence onl
 
 * **Parameters**
 
-`rectangle` (`list`) the area of the screen to search in the format [x, y, width, height]
+`rectangle` (`list`): the area of the screen to search in the format [x, y, width, height]
 
-`color` (`string`) the HTML representation of the color to search for
+`color` (`string`): the HTML representation of the color to search for
 
 * **Return values**
 
-`found` (`bool`) true if the function found a pixel with the specified color
+`found` (`bool`): true if the function found a pixel with the specified color
 
-`point` (`list`) a list with the x, y coordinates of the found pixel. If `found` is false, then `point` will be `[-1, -1]`
+`point` (`list`): a list with the x, y coordinates of the found pixel. If `found` is false, then `point` will be `[-1, -1]`
 
 * **Example usage**
 
@@ -492,13 +537,13 @@ _Note that the number of occurences will be 100% accurate only with a pixel sear
 
 * **Parameters**
 
-`rectangle` (`list`) the area of the screen to search in the format [x, y, width, height]
+`rectangle` (`list`): the area of the screen to search in the format [x, y, width, height]
 
-`color` (`string`) the HTML representation of the color to search for
+`color` (`string`): the HTML representation of the color to search for
 
 * **Return values**
 
-`counter` (`int`) the number of occurrences of the color in the searched pixels
+`counter` (`int`): the number of occurrences of the color in the searched pixels
 
 * **Example usage**
 
@@ -528,7 +573,7 @@ _The default value of the pixel search speed is 1_
 
 * **Parameters**
 
-`speed` (`int`) the number of pixels to add to the current pixel while searching. E.g. if speed is 3 then after reading pixel #1 it will skip to pixel #1+3 = #4, skipping 2 pixels
+`speed` (`int`): the number of pixels to add to the current pixel while searching. E.g. if speed is 3 then after reading pixel #1 it will skip to pixel #1+3 = #4, skipping 2 pixels
 
 * **Return values**
 
@@ -551,36 +596,127 @@ found, point = m.pixel_color_in_area([100, 200, 500, 500], '#00ff00')
 
 ### `wait_for_no_pixel_color_in_area`
 
-Waits till the rectangle 'rectangle' does not containa pixel of color 'color', checking every 'interval' milliseconds.Then it simply exits returning the pixel where the color was foundfirst.The rectangle is a tuple [x, y, width, height], where x, y thecoordinates of the top left corner and width, height the widthand the height of the rectangle.The color is a string with a hexadecimal representation ofa color (e.g. #000000)
+* **Description**
+
+_Waits for a specific color to not be present in an area of the screen_
+
+_Please note that this function is 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed)_
+
+* **Parameters**
+
+`rectangle` (`list`): the area of the screen to search in the format [x, y, width, height]
+
+`color` (`str`): the HTML representation of the color to search for
+
+`interval` (`int`): the interval in milliseconds between each check
+
+* **Return values**
+
+`None`
+
+* **Example usage**
+
+```python
+# wait till there are no black pixels in an area of the screen
+Macro.wait_for_no_pixel_color_in_area([0, 0, 500, 500], '#000000', 5000)
+
+print 'there are no black pixels at [0, 0, 500, 500]'
+```
+
 
 ---
 
 ### `wait_for_no_pixel_color_in_area_special`
 
-Waits till the rectangle 'rectangle' does not containa pixel of color 'color', checking every 'interval' milliseconds.It will run the function 'function' when it has checked 'times'times for the pixel color (and it hasn't found it, otherwise it exits).The rectangle is a tuple [x, y, width, height], where x, y thecoordinates of the top left corner and width, height the widthand the height of the rectangle.The color is a string with a hexadecimal representation ofa color (e.g. #000000)
+* **Description**
+
+_The same as [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_area_special) but instead waits the specified area of the screen to not contain the specified color_
+
 
 ---
 
 ### `wait_for_no_pixel_color_special`
 
-Waits till the point 'point' is not of color 'color', checkingevery 'interval' milliseconds. It will run the function 'function'when it has checked 'times' times for the pixel color (and ithasn't found it, otherwise it exits).
+* **Description**
+
+_The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special) but instead waits the specified pixel to not be the specified color_
+
 
 ---
 
 ### `wait_for_pixel_color_in_area`
 
-Waits till the rectangle 'rectangle' contains a pixel of color'color', checking every 'interval' milliseconds. Then it simplyexits returning the pixel where the color was found first.The rectangle is a tuple [x, y, width, height], where x, y thecoordinates of the top left corner and width, height the widthand the height of the rectangle.The color is a string with a hexadecimal representation ofa color (e.g. #000000)
+* **Description**
+
+_Waits for a specific color to be found in an area of the screen_
+
+_Please note that this function is 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed)_
+
+* **Parameters**
+
+`rectangle` (`list`): the area of the screen to search in the format [x, y, width, height]
+
+`color` (`str`): the HTML representation of the color to search for
+
+`interval` (`int`): the interval in milliseconds between each check
+
+* **Return values**
+
+`point` (`list`): the point that contains the x, y coordinates of the pixel found to have the specified color
+
+* **Example usage**
+
+```python
+# wait till the function finds a black pixel in an area of the screen, checking every 5 seconds
+point = Macro.wait_for_pixel_color_in_area([0, 0, 500, 500], '#000000', 5000)
+
+print 'black found at', point
+```
+
 
 ---
 
 ### `wait_for_pixel_color_in_area_special`
 
-Waits till the rectangle 'rectangle' contains a pixel of color'color', checking every 'interval' milliseconds. It will run thefunction 'function' when it has checked 'times' times for the pixelcolor (and it hasn't found it, otherwise it exits).The rectangle is a tuple [x, y, width, height], where x, y thecoordinates of the top left corner and width, height the widthand the height of the rectangle.The color is a string with a hexadecimal representation ofa color (e.g. #000000)
+* **Description**
+
+_The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special) but instead waits the specified area of the screen to contain the specified color_
+
 
 ---
 
 ### `wait_for_pixel_color_special`
 
-Waits till the point 'point' is of color 'color', checkingevery 'interval' milliseconds. It will run the function 'function'when it has checked 'times' times for the pixel color (and ithasn't found it, otherwise it exits).
+* **Description**
 
+_Waits for a pixel to be of specific color. In between checking this method will run a user provided function to run which can command this method to quit_
 
+_This method will exit either because the pixel becomes the specified color or the user provided function returns false_
+
+* **Parameters**
+
+`function` (`function`): the function to run every `times` checks. The function can return false to make this method to quit without waiting for the pixel to become the specified color
+
+`times` (`int`): the times to wait `interval` milliseconds before running `function`
+
+`point` (`list`): the point containing the x, y coordinates of the pixel
+
+`color` (`str`): the HTML representation of the color to wait for
+
+`interval` (`int`): the interval in milliseconds between each check
+
+* **Return values**
+
+`None`
+
+* **Example usage**
+
+```python
+# returns true if the mouse cursor is not at the top left corner of the screen
+def mouse_not_top_left():
+return Macro.get_cursor_pos() != [0, 0]
+
+# will exit if the pixel 100, 100 becomes green (checking every 1 second)
+# or if the mouse position is at 0, 0 (checking every 2 * 1 = 2 seconds)
+Macro().wait_for_pixel_color_special(mouse_not_top_left, 2, [100, 100], '#00ff00', 1000)
+```
