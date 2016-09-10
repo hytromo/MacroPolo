@@ -106,21 +106,21 @@ The above outputs:
 
 ### `color_of_pixel`
 
-> **Description**
+* **Description**
 
 _Returns the pixel color of the pixel at coordinates x, y_
 
-> **Parameters**
+* **Parameters**
 
 `x` (`int`) the x coordinate of the screen
 
 `y` (`int`) the y coordinate of the screen
 
-> **Return values**
+* **Return values**
 
 `pixel_color` (`str`) The uppercase HTML representation of the color at the x, y coordinates of the screen
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # get the color of the pixel 100, 100
@@ -132,19 +132,19 @@ print Macro.color_of_pixel(100, 100)
 
 ### `key_down`
 
-> **Description**
+* **Description**
 
 _Hold a specific key down, useful when you want to do key combinations, like Alt + Shift to change the current keyboard layout_
 
-> **Parameters**
+* **Parameters**
 
 `key` (`string`) The key to hold down
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # send Alt + F4 to the current application
@@ -162,19 +162,19 @@ key_up('F4')
 
 ### `key_up`
 
-> **Description**
+* **Description**
 
 _Hold a specific key up, useful when you want to do key combinations, like Alt + Shift to change the current keyboard layout_
 
-> **Parameters**
+* **Parameters**
 
 `key` (`string`) The key to hold up
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # send Alt + F4 to the current application
@@ -192,21 +192,21 @@ key_up('F4')
 
 ### `keyboard`
 
-> **Description**
+* **Description**
 
 _Type some text or special keys, like Backspaces, Returns etc_
 
 _For all the available keys look into `Macro.KEY_LIST`_
 
-> **Parameters**
+* **Parameters**
 
 `key` (`string`/`list`) If the `key` is a string, then it is simpy typed out. If it is a list of strings, every string in the list will be typed out. If a string in the list starts with `@@` then it is recognized as a special key and it is not typed out as is
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 sentence = 'alex is awesome'
@@ -229,21 +229,21 @@ Macro.keyboard([sentence, '@@Return'])
 
 ### `left_click_to`
 
-> **Description**
+* **Description**
 
 _Left clicks the mouse at x, y_
 
-> **Parameters**
+* **Parameters**
 
 `x` (`int`) the x coordinate to left click to
 
 `y` (`int`) the y coordinate to left click to
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # left click to 100, 100
@@ -255,21 +255,21 @@ Macro.left_click_to(100, 100)
 
 ### `middle_click_to`
 
-> **Description**
+* **Description**
 
 _Middle clicks the mouse at x, y_
 
-> **Parameters**
+* **Parameters**
 
 `x` (`int`) the x coordinate to middle click to
 
 `y` (`int`) the y coordinate to middle click to
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # middle click to 100, 100
@@ -281,11 +281,11 @@ Macro.middle_click_to(100, 100)
 
 ### `mouse_event`
 
-> **Description**
+* **Description**
 
 _Generates a mouse press or release event on a specific pixel on the screen_
 
-> **Parameters**
+* **Parameters**
 
 `x` (`int`) the x coordinate where the event will be generated
 
@@ -295,11 +295,11 @@ _Generates a mouse press or release event on a specific pixel on the screen_
 
 `eventType` (`str`) A string indicating the event type. One of 'press' or 'release'
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # this example could demonstrate a drag and drop of a file
@@ -317,21 +317,21 @@ Macro.mouse_event(400, 400, 'left', 'press')
 
 ### `move_cursor_to`
 
-> **Description**
+* **Description**
 
 _Moves the cursor to the x, y coordinates_
 
-> **Parameters**
+* **Parameters**
 
 `x` (`int`) the x coordinate to move the cursor to
 
 `y` (`int`) the y coordinate to move the cursor to
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # move the cursor to 100, 100
@@ -343,21 +343,21 @@ Macro.move_cursor_to(100, 100)
 
 ### `right_click_to`
 
-> **Description**
+* **Description**
 
 _Right clicks the mouse at x, y_
 
-> **Parameters**
+* **Parameters**
 
 `x` (`int`) the x coordinate to right click to
 
 `y` (`int`) the y coordinate to right click to
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # right click to 100, 100
@@ -381,11 +381,11 @@ Waits till the point 'point' is not of color 'color', checkingevery 'interval' m
 
 ### `wait_for_pixel_color`
 
-> **Description**
+* **Description**
 
 _Waits for a pixel to become a specific color_
 
-> **Parameters**
+* **Parameters**
 
 `point` (`list`) a list containing the x, y coordinates of the pixel on the screen
 
@@ -393,11 +393,11 @@ _Waits for a pixel to become a specific color_
 
 `interval` (`int`) the interval in milliseconds between each check
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # wait for 100, 100 to become red, checking every 1 second
@@ -412,11 +412,11 @@ Macro.left_click_to(100, 100)
 
 ### `wait_for_pixel_colors`
 
-> **Description**
+* **Description**
 
 _Wait for pixels on the screen to match specified colors_
 
-> **Parameters**
+* **Parameters**
 
 `points_colors` (`list`) a list of lists. The first item of each inner list is a list containing the x, y coordinates of a pixel and the second argument is the HTML representation of the color that it should have
 
@@ -424,11 +424,11 @@ _Wait for pixels on the screen to match specified colors_
 
 `interval` (`int`) the interval in milliseconds between each check
 
-> **Return values**
+* **Return values**
 
 `pixel_index` (`int`) 0 if `for_all` is true. If `for_all` is false then `pixel_index` represents the index in `points_colors` that contain the pixel / color pair that satisfied the condition and made the function to quit
 
-> **Example usage**
+* **Example usage**
 
 ```python
 points_colors = [[[100, 100], '#ff0000'], [[200, 200], '#00ff00'], [[500, 500], '#0000ff']]
@@ -450,25 +450,25 @@ print 'I know that the pixel', points_colors[index][0], 'is of color', points_co
 
 ### `pixel_color_in_area`
 
-> **Description**
+* **Description**
 
 _Searches for a pixel with a specific color in an area of the screen._
 
 _Note that this function is 100% accurate and will return the 1st occurrence only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed)_
 
-> **Parameters**
+* **Parameters**
 
 `rectangle` (`list`) the area of the screen to search in the format [x, y, width, height]
 
 `color` (`string`) the HTML representation of the color to search for
 
-> **Return values**
+* **Return values**
 
 `found` (`bool`) true if the function found a pixel with the specified color
 
 `point` (`list`) a list with the x, y coordinates of the found pixel. If `found` is false, then `point` will be `[-1, -1]`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 # search for a blue pixel in an area of the screen. By default the pixel search speed is 1 so we don't need to manually set it
@@ -484,23 +484,23 @@ Macro.left_click_to(point[0], point[1])
 
 ### `pixel_count_in_area`
 
-> **Description**
+* **Description**
 
 _Count the number of occurrences of a specific color on an area of the screen. You can modify which pixels to search for with the pixel search speed._
 
 _Note that the number of occurences will be 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed)_
 
-> **Parameters**
+* **Parameters**
 
 `rectangle` (`list`) the area of the screen to search in the format [x, y, width, height]
 
 `color` (`string`) the HTML representation of the color to search for
 
-> **Return values**
+* **Return values**
 
 `counter` (`int`) the number of occurrences of the color in the searched pixels
 
-> **Example usage**
+* **Example usage**
 
 ```python
 m = Macro()
@@ -516,7 +516,7 @@ print 'There are', m.pixel_count_in_area([0, 0, 100, 100], '#000000'), 'black pi
 
 ### `set_pixel_search_speed`
 
-> **Description**
+* **Description**
 
 _Set the search speed (aka the number of pixels to skip forward on each iteration) for functions that search for pixel colors in areas of the screen._
 
@@ -526,15 +526,15 @@ _Use with caution when the searched color is present in areas with width smaller
 
 _The default value of the pixel search speed is 1_
 
-> **Parameters**
+* **Parameters**
 
 `speed` (`int`) the number of pixels to add to the current pixel while searching. E.g. if speed is 3 then after reading pixel #1 it will skip to pixel #1+3 = #4, skipping 2 pixels
 
-> **Return values**
+* **Return values**
 
 `None`
 
-> **Example usage**
+* **Example usage**
 
 ```python
 m = new Macro()

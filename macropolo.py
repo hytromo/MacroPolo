@@ -100,8 +100,6 @@ class Macro:
 
             # now search in the rectangle [100, 200, 500, 500] for a green pixel, skipping 2 pixels each time (searching only 1/3 of the pixels)
             found, point = m.pixel_color_in_area([100, 200, 500, 500], '#00ff00')
-            # get the color on 100, 100
-            print Macro.color_of_pixel(100, 100) # #F78432 (result depends on the current color of pixel (100, 100) during runtime)
         """
         self.pixel_search_speed=speed;
 
