@@ -7,7 +7,7 @@ from pyatspi import Registry as controller
 from pyatspi import (KEY_SYM, KEY_PRESS, KEY_PRESSRELEASE, KEY_RELEASE, MOUSE_ABS)
 from PyQt4.QtGui import QPixmap, QApplication, QColor, QImage, QDesktopWidget, QCursor
 from PyQt4.QtCore import QPoint, QRect
-import sys, time
+import sys, time, pytesseract, Image
 
 def to_upper(string):
     """
@@ -452,7 +452,7 @@ class Macro:
             # get the color of the pixel 100, 100
             print Macro.color_of_pixel(100, 100)
         """
-        return to_upper(str(Macro.__grabDesktop().pixel(x, y).name()))
+        return to_upper(str(QColor(Macro.__grabDesktop().pixel(x, y)).name()))
         
     @staticmethod
     def wait_for_pixel_color(point, color, interval):
@@ -730,4 +730,9 @@ class Macro:
         """
         img = Macro.__grabDesktop().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]))
         img.save(filename, "PNG", 100);
+
+    @staticmethod
+    def read_image(filename, name = None):
+        return pytesseract.image_to_string(Image.open(filename))
+
 
