@@ -65,9 +65,22 @@ macro = macropolo.Macro()
 print macro.middle_click_to.__doc__
 ~~~
 
-The above outputs:
+The above outputs some variation of:
+
 ~~~
-'Middle clicks the cursor to the x, y coordinates'
+> Description
+    Middle clicks the mouse at x, y
+
+> Parameters
+    x (int): the x coordinate to middle click to
+    y (int): the y coordinate to middle click to
+
+> Returns
+    None
+
+> Example
+    # middle click to 100, 100
+    Macro.middle_click_to(100, 100)
 ~~~
 
 # Macro
@@ -148,13 +161,13 @@ _Hold a specific key down, useful when you want to do key combinations, like Alt
 
 ```python
 # send Alt + F4 to the current application
-key_down('Alt')
-key_down('F4')
+Macro.key_down('Alt')
+Macro.key_down('F4')
 
 time.sleep(0.2)
 
-key_up('Alt')
-key_up('F4')
+Macro.key_up('Alt')
+Macro.key_up('F4')
 ```
 
 
@@ -178,13 +191,13 @@ _Hold a specific key up, useful when you want to do key combinations, like Alt +
 
 ```python
 # send Alt + F4 to the current application
-key_down('Alt')
-key_down('F4')
+Macro.key_down('Alt')
+Macro.key_down('F4')
 
 time.sleep(0.2)
 
-key_up('Alt')
-key_up('F4')
+Macro.key_up('Alt')
+Macro.key_up('F4')
 ```
 
 
@@ -720,3 +733,6 @@ return Macro.get_cursor_pos() != [0, 0]
 # or if the mouse position is at 0, 0 (checking every 2 * 1 = 2 seconds)
 Macro().wait_for_pixel_color_special(mouse_not_top_left, 2, [100, 100], '#00ff00', 1000)
 ```
+
+
+This documentation was automatically formated for github by [pydoc2gitmd](#https://github.com/hytromo/pydoc2gitmd)

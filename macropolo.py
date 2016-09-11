@@ -310,13 +310,13 @@ class Macro:
 
         > Example
             # send Alt + F4 to the current application
-            key_down('Alt')
-            key_down('F4')
+            Macro.key_down('Alt')
+            Macro.key_down('F4')
 
             time.sleep(0.2)
 
-            key_up('Alt')
-            key_up('F4')
+            Macro.key_up('Alt')
+            Macro.key_up('F4')
         """
         # TODO check for special keys
         if key in Macro.KEY_LIST:
@@ -336,13 +336,13 @@ class Macro:
 
         > Example
             # send Alt + F4 to the current application
-            key_down('Alt')
-            key_down('F4')
+            Macro.key_down('Alt')
+            Macro.key_down('F4')
 
             time.sleep(0.2)
 
-            key_up('Alt')
-            key_up('F4')
+            Macro.key_up('Alt')
+            Macro.key_up('F4')
         """
         if key in Macro.KEY_LIST:
             controller.generateKeyboardEvent(Macro.KEY_LIST[key], None, KEY_RELEASE)
