@@ -735,4 +735,5 @@ Macro().wait_for_pixel_color_special(mouse_not_top_left, 2, [100, 100], '#00ff00
 ```
 
 
-This documentation was automatically formated for github by [pydoc2gitmd](#https://github.com/hytromo/pydoc2gitmd)
+This documentation was automatically formated for github by [pydoc2gitmd](https://github.com/hytromo/pydoc2gitmd)
+
