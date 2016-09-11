@@ -104,7 +104,7 @@ The above outputs:
 
 ---
 
-### `color_of_pixel`
+### `color_of_pixel (x, y)`
 
 * **Description**
 
@@ -130,7 +130,7 @@ print Macro.color_of_pixel(100, 100)
 
 ---
 
-### `key_down`
+### `key_down (key)`
 
 * **Description**
 
@@ -160,7 +160,7 @@ key_up('F4')
 
 ---
 
-### `key_up`
+### `key_up (key)`
 
 * **Description**
 
@@ -190,7 +190,7 @@ key_up('F4')
 
 ---
 
-### `keyboard`
+### `keyboard (key)`
 
 * **Description**
 
@@ -227,7 +227,7 @@ Macro.keyboard([sentence, '@@Return'])
 
 ---
 
-### `left_click_to`
+### `left_click_to (x, y)`
 
 * **Description**
 
@@ -253,7 +253,7 @@ Macro.left_click_to(100, 100)
 
 ---
 
-### `middle_click_to`
+### `middle_click_to (x, y)`
 
 * **Description**
 
@@ -279,7 +279,7 @@ Macro.middle_click_to(100, 100)
 
 ---
 
-### `mouse_event`
+### `mouse_event (x, y, button, eventType)`
 
 * **Description**
 
@@ -315,7 +315,7 @@ Macro.mouse_event(400, 400, 'left', 'press')
 
 ---
 
-### `move_cursor_to`
+### `move_cursor_to (x, y)`
 
 * **Description**
 
@@ -341,7 +341,7 @@ Macro.move_cursor_to(100, 100)
 
 ---
 
-### `right_click_to`
+### `right_click_to (x, y)`
 
 * **Description**
 
@@ -367,7 +367,7 @@ Macro.right_click_to(100, 100)
 
 ---
 
-### `save_section_of_the_screen`
+### `save_section_of_the_screen (rectangle, filename)`
 
 * **Description**
 
@@ -393,7 +393,7 @@ Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png')
 
 ---
 
-### `wait_for_no_pixel_color`
+### `wait_for_no_pixel_color (point, color, interval)`
 
 * **Description**
 
@@ -424,7 +424,7 @@ Macro.wait_for_no_pixel_color([100, 100], Macro.color_of_pixel(100, 100), 1000)
 
 ---
 
-### `wait_for_pixel_color`
+### `wait_for_pixel_color (point, color, interval)`
 
 * **Description**
 
@@ -455,7 +455,7 @@ Macro.left_click_to(100, 100)
 
 ---
 
-### `wait_for_pixel_colors`
+### `wait_for_pixel_colors (points_colors, for_all, interval)`
 
 * **Description**
 
@@ -493,7 +493,7 @@ print 'I know that the pixel', points_colors[index][0], 'is of color', points_co
 
 ---
 
-### `pixel_color_in_area`
+### `pixel_color_in_area (rectangle, color)`
 
 * **Description**
 
@@ -527,7 +527,7 @@ Macro.left_click_to(point[0], point[1])
 
 ---
 
-### `pixel_count_in_area`
+### `pixel_count_in_area (rectangle, color)`
 
 * **Description**
 
@@ -559,7 +559,7 @@ print 'There are', m.pixel_count_in_area([0, 0, 100, 100], '#000000'), 'black pi
 
 ---
 
-### `set_pixel_search_speed`
+### `set_pixel_search_speed (speed)`
 
 * **Description**
 
@@ -594,7 +594,7 @@ found, point = m.pixel_color_in_area([100, 200, 500, 500], '#00ff00')
 
 ---
 
-### `wait_for_no_pixel_color_in_area`
+### `wait_for_no_pixel_color_in_area (rectangle, color, interval)`
 
 * **Description**
 
@@ -626,7 +626,7 @@ print 'there are no black pixels at [0, 0, 500, 500]'
 
 ---
 
-### `wait_for_no_pixel_color_in_area_special`
+### `wait_for_no_pixel_color_in_area_special (function, times, rectangle, color, interval)`
 
 * **Description**
 
@@ -635,7 +635,7 @@ _The same as [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_are
 
 ---
 
-### `wait_for_no_pixel_color_special`
+### `wait_for_no_pixel_color_special (function, times, point, color, interval)`
 
 * **Description**
 
@@ -644,7 +644,7 @@ _The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special) but i
 
 ---
 
-### `wait_for_pixel_color_in_area`
+### `wait_for_pixel_color_in_area (rectangle, color, interval)`
 
 * **Description**
 
@@ -676,7 +676,7 @@ print 'black found at', point
 
 ---
 
-### `wait_for_pixel_color_in_area_special`
+### `wait_for_pixel_color_in_area_special (function, times, rectangle, color, interval)`
 
 * **Description**
 
@@ -685,7 +685,7 @@ _The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special) but i
 
 ---
 
-### `wait_for_pixel_color_special`
+### `wait_for_pixel_color_special (function, times, point, color, interval)`
 
 * **Description**
 

@@ -728,8 +728,7 @@ class Macro:
             # save a section of the screen to /tmp/file.png
             Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png')
         """
-        img = Macro.__grabDesktop().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]))
-        img.save(filename, "PNG", 100);
+        Macro.__grabDesktop().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3])).save(filename, "PNG", 100);
 
     @staticmethod
     def read_image(filename, name = None):
