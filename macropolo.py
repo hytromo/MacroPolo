@@ -722,16 +722,31 @@ class Macro:
             filename (str): the filename of the file to save the image
 
         > Returns
-            None
+            success (bool): whether the image capture and save was successful or not
 
         > Example
             # save a section of the screen to /tmp/file.png
             Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png')
         """
-        Macro.__grabDesktop().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3])).save(filename, "PNG", 100);
+        return Macro.__grabDesktop().copy(QRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3])).save(filename, 'PNG', 100);
 
     @staticmethod
-    def read_image(filename, name = None):
+    def read_image(filename):
+        """
+        > Description
+            Reads an image as text
+
+        > Parameters
+            filename (str): the name of the image to read
+
+        > Returns
+            image_text (str): the text inside the image
+
+        > Example
+            # read a section of the screen
+            if Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png'):
+                print 'I can read', Macro.read_image('/tmp/file.png')
+        """
         return pytesseract.image_to_string(Image.open(filename))
 
 

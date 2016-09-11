@@ -49,7 +49,8 @@ Most methods are `static`. The only methods that require an instance of `Macro()
 Run the following on a debian system to install the dependencies:
 
 ~~~ bash
-sudo apt-get install python-qt4 python-pyatspi2
+sudo apt-get install python-qt4 python-pyatspi2 tesseract-ocr
+sudo pip install pytesseract
 ~~~
 
 # More info
@@ -95,6 +96,7 @@ The above outputs some variation of:
     - [middle_click_to](#middle_click_to-x-y)
     - [mouse_event](#mouse_event-x-y-button-eventtype)
     - [move_cursor_to](#move_cursor_to-x-y)
+    - [read_image](#read_image-filename)
     - [right_click_to](#right_click_to-x-y)
     - [save_section_of_the_screen](#save_section_of_the_screen-rectangle-filename)
     - [wait_for_no_pixel_color](#wait_for_no_pixel_color-point-color-interval)
@@ -354,6 +356,31 @@ Macro.move_cursor_to(100, 100)
 
 ---
 
+### `read_image (filename)`
+
+* **Description**
+
+_Reads an image as text_
+
+* **Parameters**
+
+`filename` (`str`): the name of the image to read
+
+* **Return values**
+
+`image_text` (`str`): the text inside the image
+
+* **Example usage**
+
+```python
+# read a section of the screen
+if Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png'):
+print 'I can read', Macro.read_image('/tmp/file.png')
+```
+
+
+---
+
 ### `right_click_to (x, y)`
 
 * **Description**
@@ -394,7 +421,7 @@ _Saves a section of the screen as a png file, useful for OCR using other tools_
 
 * **Return values**
 
-`None`
+`success` (`bool`): whether the image capture and save was successful or not
 
 * **Example usage**
 
@@ -736,4 +763,3 @@ Macro().wait_for_pixel_color_special(mouse_not_top_left, 2, [100, 100], '#00ff00
 
 
 This documentation was automatically formated for github by [pydoc2gitmd](https://github.com/hytromo/pydoc2gitmd)
-
