@@ -74,31 +74,31 @@ The above outputs:
 
 - [Static methods](#static-methods)
 
-    - [color_of_pixel](#color_of_pixel)
-    - [key_down](#key_down)
-    - [key_up](#key_up)
-    - [keyboard](#keyboard)
-    - [left_click_to](#left_click_to)
-    - [middle_click_to](#middle_click_to)
-    - [mouse_event](#mouse_event)
-    - [move_cursor_to](#move_cursor_to)
-    - [right_click_to](#right_click_to)
-    - [save_section_of_the_screen](#save_section_of_the_screen)
-    - [wait_for_no_pixel_color](#wait_for_no_pixel_color)
-    - [wait_for_pixel_color](#wait_for_pixel_color)
-    - [wait_for_pixel_colors](#wait_for_pixel_colors)
+    - [color_of_pixel](#color_of_pixel-x-y)
+    - [key_down](#key_down-key)
+    - [key_up](#key_up-key)
+    - [keyboard](#keyboard-key)
+    - [left_click_to](#left_click_to-x-y)
+    - [middle_click_to](#middle_click_to-x-y)
+    - [mouse_event](#mouse_event-x-y-button-eventtype)
+    - [move_cursor_to](#move_cursor_to-x-y)
+    - [right_click_to](#right_click_to-x-y)
+    - [save_section_of_the_screen](#save_section_of_the_screen-rectangle-filename)
+    - [wait_for_no_pixel_color](#wait_for_no_pixel_color-point-color-interval)
+    - [wait_for_pixel_color](#wait_for_pixel_color-point-color-interval)
+    - [wait_for_pixel_colors](#wait_for_pixel_colors-points_colors-for_all-interval)
 
 - [Instance methods](#instance-methods)
 
-    - [pixel_color_in_area](#pixel_color_in_area)
-    - [pixel_count_in_area](#pixel_count_in_area)
-    - [set_pixel_search_speed](#set_pixel_search_speed)
-    - [wait_for_no_pixel_color_in_area](#wait_for_no_pixel_color_in_area)
-    - [wait_for_no_pixel_color_in_area_special](#wait_for_no_pixel_color_in_area_special)
-    - [wait_for_no_pixel_color_special](#wait_for_no_pixel_color_special)
-    - [wait_for_pixel_color_in_area](#wait_for_pixel_color_in_area)
-    - [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_area_special)
-    - [wait_for_pixel_color_special](#wait_for_pixel_color_special)
+    - [pixel_color_in_area](#pixel_color_in_area-rectangle-color)
+    - [pixel_count_in_area](#pixel_count_in_area-rectangle-color)
+    - [set_pixel_search_speed](#set_pixel_search_speed-speed)
+    - [wait_for_no_pixel_color_in_area](#wait_for_no_pixel_color_in_area-rectangle-color-interval)
+    - [wait_for_no_pixel_color_in_area_special](#wait_for_no_pixel_color_in_area_special-function-times-rectangle-color-interval)
+    - [wait_for_no_pixel_color_special](#wait_for_no_pixel_color_special-function-times-point-color-interval)
+    - [wait_for_pixel_color_in_area](#wait_for_pixel_color_in_area-rectangle-color-interval)
+    - [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_area_special-function-times-rectangle-color-interval)
+    - [wait_for_pixel_color_special](#wait_for_pixel_color_special-function-times-point-color-interval)
 
 ## Static methods
 
@@ -559,7 +559,7 @@ print 'There are', m.pixel_count_in_area([0, 0, 100, 100], '#000000'), 'black pi
 
 ---
 
-### `set_pixel_search_speed ()`
+### `set_pixel_search_speed (speed)`
 
 * **Description**
 
