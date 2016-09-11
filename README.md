@@ -138,8 +138,8 @@ _Returns the pixel color of the pixel at coordinates x, y_
 * **Example usage**
 
 ```python
-    # get the color of the pixel 100, 100
-    print Macro.color_of_pixel(100, 100)
+# get the color of the pixel 100, 100
+print Macro.color_of_pixel(100, 100)
 ```
 
 
@@ -162,14 +162,14 @@ _Hold a specific key down, useful when you want to do key combinations, like Alt
 * **Example usage**
 
 ```python
-    # send Alt + F4 to the current application
-    Macro.key_down('Alt')
-    Macro.key_down('F4')
+# send Alt + F4 to the current application
+Macro.key_down('Alt')
+Macro.key_down('F4')
 
-    time.sleep(0.2)
+time.sleep(0.2)
 
-    Macro.key_up('Alt')
-    Macro.key_up('F4')
+Macro.key_up('Alt')
+Macro.key_up('F4')
 ```
 
 
@@ -192,14 +192,14 @@ _Hold a specific key up, useful when you want to do key combinations, like Alt +
 * **Example usage**
 
 ```python
-    # send Alt + F4 to the current application
-    Macro.key_down('Alt')
-    Macro.key_down('F4')
+# send Alt + F4 to the current application
+Macro.key_down('Alt')
+Macro.key_down('F4')
 
-    time.sleep(0.2)
+time.sleep(0.2)
 
-    Macro.key_up('Alt')
-    Macro.key_up('F4')
+Macro.key_up('Alt')
+Macro.key_up('F4')
 ```
 
 
@@ -224,19 +224,19 @@ _For all the available keys look into `Macro.KEY_LIST`_
 * **Example usage**
 
 ```python
-    sentence = 'alex is awesome'
+sentence = 'alex is awesome'
 
-    # types out 'alex is awesome'
-    Macro.keyboard(sentence)
+# types out 'alex is awesome'
+Macro.keyboard(sentence)
 
-    # types out '@@BackSpace'
-    Macro.keyboard('@@BackSpace')
+# types out '@@BackSpace'
+Macro.keyboard('@@BackSpace')
 
-    # sends a backspace (deletes a character)
-    Macro.keyboard(['@@BackSpace'])
+# sends a backspace (deletes a character)
+Macro.keyboard(['@@BackSpace'])
 
-    # types out 'alex is awesome' and then proceeds to go to the next line
-    Macro.keyboard([sentence, '@@Return'])
+# types out 'alex is awesome' and then proceeds to go to the next line
+Macro.keyboard([sentence, '@@Return'])
 ```
 
 
@@ -261,8 +261,8 @@ _Left clicks the mouse at x, y_
 * **Example usage**
 
 ```python
-    # left click to 100, 100
-    Macro.left_click_to(100, 100)
+# left click to 100, 100
+Macro.left_click_to(100, 100)
 ```
 
 
@@ -287,8 +287,8 @@ _Middle clicks the mouse at x, y_
 * **Example usage**
 
 ```python
-    # middle click to 100, 100
-    Macro.middle_click_to(100, 100)
+# middle click to 100, 100
+Macro.middle_click_to(100, 100)
 ```
 
 
@@ -317,14 +317,14 @@ _Generates a mouse press or release event on a specific pixel on the screen_
 * **Example usage**
 
 ```python
-    # this example could demonstrate a drag and drop of a file
+# this example could demonstrate a drag and drop of a file
 
-    # press the left mouse button at 100, 100
-    Macro.mouse_event(100, 100, 'left', 'press')
-    # move the cursor to 400, 400
-    Macro.move_cursor_to(400, 400)
-    # then, release the mouse
-    Macro.mouse_event(400, 400, 'left', 'press')
+# press the left mouse button at 100, 100
+Macro.mouse_event(100, 100, 'left', 'press')
+# move the cursor to 400, 400
+Macro.move_cursor_to(400, 400)
+# then, release the mouse
+Macro.mouse_event(400, 400, 'left', 'press')
 ```
 
 
@@ -349,8 +349,8 @@ _Moves the cursor to the x, y coordinates_
 * **Example usage**
 
 ```python
-    # move the cursor to 100, 100
-    Macro.move_cursor_to(100, 100)
+# move the cursor to 100, 100
+Macro.move_cursor_to(100, 100)
 ```
 
 
@@ -373,9 +373,9 @@ _Reads an image as text_
 * **Example usage**
 
 ```python
-    # read a section of the screen
-    if Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png'):
-        print 'I can read', Macro.read_image('/tmp/file.png')
+# read a section of the screen
+if Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png'):
+    print 'I can read', Macro.read_image('/tmp/file.png')
 ```
 
 
@@ -400,8 +400,8 @@ _Right clicks the mouse at x, y_
 * **Example usage**
 
 ```python
-    # right click to 100, 100
-    Macro.right_click_to(100, 100)
+# right click to 100, 100
+Macro.right_click_to(100, 100)
 ```
 
 
@@ -426,8 +426,8 @@ _Saves a section of the screen as a png file, useful for OCR using other tools_
 * **Example usage**
 
 ```python
-    # save a section of the screen to /tmp/file.png
-    Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png')
+# save a section of the screen to /tmp/file.png
+Macro.save_section_of_the_screen([100, 100, 50, 50], '/tmp/file.png')
 ```
 
 
@@ -454,11 +454,11 @@ _Waits for a pixel to not be of a specific color_
 * **Example usage**
 
 ```python
-    # wait for pixel 100, 100 to not be red, checking every 1 second
-    Macro.wait_for_no_pixel_color([100, 100], '#ff0000', 1000)
+# wait for pixel 100, 100 to not be red, checking every 1 second
+Macro.wait_for_no_pixel_color([100, 100], '#ff0000', 1000)
 
-    # just wait for the pixel at 100, 100 to change color, checking every 1 second
-    Macro.wait_for_no_pixel_color([100, 100], Macro.color_of_pixel(100, 100), 1000)
+# just wait for the pixel at 100, 100 to change color, checking every 1 second
+Macro.wait_for_no_pixel_color([100, 100], Macro.color_of_pixel(100, 100), 1000)
 ```
 
 
@@ -485,11 +485,11 @@ _Waits for a pixel to become a specific color_
 * **Example usage**
 
 ```python
-    # wait for 100, 100 to become red, checking every 1 second
-    Macro.wait_for_pixel_color([100, 100], '#ff0000', 1000)
+# wait for 100, 100 to become red, checking every 1 second
+Macro.wait_for_pixel_color([100, 100], '#ff0000', 1000)
 
-    # now the pixel has the needed color so we may continue with e.g. clicking that point
-    Macro.left_click_to(100, 100)
+# now the pixel has the needed color so we may continue with e.g. clicking that point
+Macro.left_click_to(100, 100)
 ```
 
 
@@ -516,16 +516,16 @@ _Wait for pixels on the screen to match specified colors_
 * **Example usage**
 
 ```python
-    points_colors = [[[100, 100], '#ff0000'], [[200, 200], '#00ff00'], [[500, 500], '#0000ff']]
+points_colors = [[[100, 100], '#ff0000'], [[200, 200], '#00ff00'], [[500, 500], '#0000ff']]
 
-    # wait for 100, 100 to become red, 200, 200 to become green and 500, 500 to become blue, checking every 1 second
-    Macro.wait_for_pixel_colors(points_colors, True, 1000)
+# wait for 100, 100 to become red, 200, 200 to become green and 500, 500 to become blue, checking every 1 second
+Macro.wait_for_pixel_colors(points_colors, True, 1000)
 
-    # wait for 100, 100 to become red or 200, 200 to become green or 500, 500 to become blue, checking every 1 second
-    index = Macro.wait_for_pixel_colors(points_colors, False, 1000)
+# wait for 100, 100 to become red or 200, 200 to become green or 500, 500 to become blue, checking every 1 second
+index = Macro.wait_for_pixel_colors(points_colors, False, 1000)
 
-    # we can now see which pixel matched the needed color and made the function to quit
-    print 'I know that the pixel', points_colors[index][0], 'is of color', points_colors[index][1]
+# we can now see which pixel matched the needed color and made the function to quit
+print 'I know that the pixel', points_colors[index][0], 'is of color', points_colors[index][1]
 ```
 
 
@@ -556,12 +556,12 @@ _Note that this function is 100% accurate and will return the 1st occurrence onl
 * **Example usage**
 
 ```python
-    # search for a blue pixel in an area of the screen. By default the pixel search speed is 1 so we don't need to manually set it
-    found, point = Macro().pixel_color_in_area([0, 0, 1000, 500], '#0000ff')
+# search for a blue pixel in an area of the screen. By default the pixel search speed is 1 so we don't need to manually set it
+found, point = Macro().pixel_color_in_area([0, 0, 1000, 500], '#0000ff')
 
-    # if there was a pixel, click on it
-    if found:
-        Macro.left_click_to(point[0], point[1])
+# if there was a pixel, click on it
+if found:
+    Macro.left_click_to(point[0], point[1])
 ```
 
 
@@ -588,12 +588,12 @@ _Note that the number of occurences will be 100% accurate only with a pixel sear
 * **Example usage**
 
 ```python
-    m = Macro()
+m = Macro()
 
-    # search every pixel
-    m.set_pixel_search_speed(1)
+# search every pixel
+m.set_pixel_search_speed(1)
 
-    print 'There are', m.pixel_count_in_area([0, 0, 100, 100], '#000000'), 'black pixels in some part of the screen'
+print 'There are', m.pixel_count_in_area([0, 0, 100, 100], '#000000'), 'black pixels in some part of the screen'
 ```
 
 
@@ -622,13 +622,13 @@ _The default value of the pixel search speed is 1_
 * **Example usage**
 
 ```python
-    m = new Macro()
+m = new Macro()
 
-    # set the pixel search speed to 3
-    m.set_pixel_search_speed(3)
+# set the pixel search speed to 3
+m.set_pixel_search_speed(3)
 
-    # now search in the rectangle [100, 200, 500, 500] for a green pixel, skipping 2 pixels each time (searching only 1/3 of the pixels)
-    found, point = m.pixel_color_in_area([100, 200, 500, 500], '#00ff00')
+# now search in the rectangle [100, 200, 500, 500] for a green pixel, skipping 2 pixels each time (searching only 1/3 of the pixels)
+found, point = m.pixel_color_in_area([100, 200, 500, 500], '#00ff00')
 ```
 
 
@@ -657,10 +657,10 @@ _Please note that this function is 100% accurate only with a pixel search speed 
 * **Example usage**
 
 ```python
-    # wait till there are no black pixels in an area of the screen
-    Macro.wait_for_no_pixel_color_in_area([0, 0, 500, 500], '#000000', 5000)
+# wait till there are no black pixels in an area of the screen
+Macro.wait_for_no_pixel_color_in_area([0, 0, 500, 500], '#000000', 5000)
 
-    print 'there are no black pixels at [0, 0, 500, 500]'
+print 'there are no black pixels at [0, 0, 500, 500]'
 ```
 
 
@@ -707,10 +707,10 @@ _Please note that this function is 100% accurate only with a pixel search speed 
 * **Example usage**
 
 ```python
-    # wait till the function finds a black pixel in an area of the screen, checking every 5 seconds
-    point = Macro.wait_for_pixel_color_in_area([0, 0, 500, 500], '#000000', 5000)
+# wait till the function finds a black pixel in an area of the screen, checking every 5 seconds
+point = Macro.wait_for_pixel_color_in_area([0, 0, 500, 500], '#000000', 5000)
 
-    print 'black found at', point
+print 'black found at', point
 ```
 
 
@@ -752,13 +752,13 @@ _This method will exit either because the pixel becomes the specified color or t
 * **Example usage**
 
 ```python
-    # returns true if the mouse cursor is not at the top left corner of the screen
-    def mouse_not_top_left():
-        return Macro.get_cursor_pos() != [0, 0]
+# returns true if the mouse cursor is not at the top left corner of the screen
+def mouse_not_top_left():
+    return Macro.get_cursor_pos() != [0, 0]
 
-    # will exit if the pixel 100, 100 becomes green (checking every 1 second)
-    # or if the mouse position is at 0, 0 (checking every 2 * 1 = 2 seconds)
-    Macro().wait_for_pixel_color_special(mouse_not_top_left, 2, [100, 100], '#00ff00', 1000)
+# will exit if the pixel 100, 100 becomes green (checking every 1 second)
+# or if the mouse position is at 0, 0 (checking every 2 * 1 = 2 seconds)
+Macro().wait_for_pixel_color_special(mouse_not_top_left, 2, [100, 100], '#00ff00', 1000)
 ```
 
 
