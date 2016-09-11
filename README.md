@@ -559,7 +559,7 @@ print 'There are', m.pixel_count_in_area([0, 0, 100, 100], '#000000'), 'black pi
 
 ---
 
-### `set_pixel_search_speed (speed)`
+### `set_pixel_search_speed ()`
 
 * **Description**
 
