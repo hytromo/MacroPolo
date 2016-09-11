@@ -499,7 +499,7 @@ print 'I know that the pixel', points_colors[index][0], 'is of color', points_co
 
 _Searches for a pixel with a specific color in an area of the screen._
 
-_Note that this function is 100% accurate and will return the 1st occurrence only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed)_
+_Note that this function is 100% accurate and will return the 1st occurrence only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed-speed)_
 
 * **Parameters**
 
@@ -533,7 +533,7 @@ Macro.left_click_to(point[0], point[1])
 
 _Count the number of occurrences of a specific color on an area of the screen. You can modify which pixels to search for with the pixel search speed._
 
-_Note that the number of occurences will be 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed)_
+_Note that the number of occurences will be 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed-speed)_
 
 * **Parameters**
 
@@ -600,7 +600,7 @@ found, point = m.pixel_color_in_area([100, 200, 500, 500], '#00ff00')
 
 _Waits for a specific color to not be present in an area of the screen_
 
-_Please note that this function is 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed)_
+_Please note that this function is 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed-speed)_
 
 * **Parameters**
 
@@ -630,7 +630,7 @@ print 'there are no black pixels at [0, 0, 500, 500]'
 
 * **Description**
 
-_The same as [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_area_special) but instead waits the specified area of the screen to not contain the specified color_
+_The same as [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_area_special-function-times-rectangle-color-interval) but instead waits the specified area of the screen to not contain the specified color_
 
 
 ---
@@ -639,7 +639,7 @@ _The same as [wait_for_pixel_color_in_area_special](#wait_for_pixel_color_in_are
 
 * **Description**
 
-_The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special) but instead waits the specified pixel to not be the specified color_
+_The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special-function-times-point-color-interval) but instead waits the specified pixel to not be the specified color_
 
 
 ---
@@ -650,7 +650,7 @@ _The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special) but i
 
 _Waits for a specific color to be found in an area of the screen_
 
-_Please note that this function is 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed)_
+_Please note that this function is 100% accurate only with a pixel search speed of 1. See more at [set_pixel_search_speed](#set_pixel_search_speed-speed)_
 
 * **Parameters**
 
@@ -680,7 +680,7 @@ print 'black found at', point
 
 * **Description**
 
-_The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special) but instead waits the specified area of the screen to contain the specified color_
+_The same as [wait_for_pixel_color_special](#wait_for_pixel_color_special-function-times-point-color-interval) but instead waits the specified area of the screen to contain the specified color_
 
 
 ---
